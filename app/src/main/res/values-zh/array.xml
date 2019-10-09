@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="face_detect_entry">
+        <item>人脸关键点</item>
+        <item>人脸切分</item>
+        <item>人脸框选</item>
+    </string-array>
+</resources>

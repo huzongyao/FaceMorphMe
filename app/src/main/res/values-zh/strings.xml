@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">MorphMe</string>
+    <string name="menu_about">关于</string>
+    <string name="version_info">版本信息</string>
+    <string name="source_code">源代码:</string>
+    <string name="my_github">我的GitHub</string>
+    <string name="about">关于</string>
+    <string name="web_view_refresh">刷新</string>
+    <string name="detect_face">人脸检测</string>
+    <string name="load_bitmap">选择图片</string>
+    <string name="two_images_morph">两张人像Morph</string>
+    <string name="tap_to_choose_images">点击图片开始选择</string>
+    <string name="start_to_morph">开始Morph</string>
+    <string name="no_face_detected">没有检测到人脸!</string>
+    <string name="choose_images_first">请先选择图片!</string>
+    <string name="loading_wait_tips">正在加载，请稍后。。。</string>
+    <string name="save_gif">保存Gif</string>
+    <string name="share_to">分享到</string>
+    <string name="loading">加载中…</string>
+    <string name="alpha_format_text">Alpha: %.4f</string>
+</resources>
