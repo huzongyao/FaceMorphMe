@@ -50,7 +50,7 @@ jfloatArray point2fVector2AFloatArray(JNIEnv *env, const std::vector<Point2f> &p
         buffer[2 * i + 1] = point.y;
     }
     env->SetFloatArrayRegion(ret, 0, count * 2, buffer);
-    delete buffer;
+    delete []buffer;
     return ret;
 }
 
@@ -66,7 +66,7 @@ jfloatArray rectVector2AFloatArray(JNIEnv *env, const std::vector<Rect> &rects) 
         buffer[2 * i + 3] = rect.y + rect.height;
     }
     env->SetFloatArrayRegion(ret, 0, count * 4, buffer);
-    delete buffer;
+    delete []buffer;
     return ret;
 }
 

@@ -11,6 +11,22 @@ FaceMorph 在Android平台的实现
 * 不过要是对于人像，我们如果能在过度透明度的同时，也慢慢过渡人物五官的位置，这样会让我们得到更加平滑的过渡效果，
 如果我找一张我很多年前拍的照片，和我现在的照片做Morph，我甚至可以发现我的相貌哪些地方发生了变化。
 
+##### Compile：
+0. 直接编译会报错，需要先下载OpenCV3x的Android开发包,详情见以下说明。
+```
+make: *** No rule to make target `morpher/src/main/cpp/opencv/jni/OpenCV.mk'.  Stop.
+```
+
+1. 关于OpenCV库
+* 为了减小生成文件的大小，对OpenCV库采用C++调用，静态链接的方式使用，这样只有被使用到的库函数才会被打包，且不用编译整个OpenCV库。
+* 为了减小源码的大小，OpenCV库相关文件使用gitignore排除了，所以编译前需要手动将OpenCV静态库和头文件拷贝到
+  morpher/src/main/cpp/opencv目录下。
+* OpenCV静态库和头文件的获取有三种方式：</br>
+  1.[官方下载](https://opencv.org/releases/),选择3.x版本(目前版本3.4.7需要用旧版NDK才行，不能使用c++_static)</br>
+  2.下载我编译的版本：[libopencv-3.4.7.7z](https://github.com/huzongyao/FaceMorphMe/releases/download/v1.0.0/libopencv-3.4.7.7z)(新版本NDK可用)</br>
+  3.自己编译一个(先build，再strip，参考misc/script/目录下的脚本)</br>
+* 为什么要使用OpenCV3.x而不是4.x：使用到的Stasm库对OpenCV3.x支持较好，不需要改太多代码。
+
 ##### Process:
 1. 人脸识别，人脸关键点识别
  * 人脸关键点识别一般可以采用[Dlib](http://dlib.net/)或者

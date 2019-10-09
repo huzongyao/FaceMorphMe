@@ -217,7 +217,7 @@ public class TwoMorphActivity extends AppCompatActivity {
                         mGifFilePath, BurstLinker.CPU_COUNT);
             }
             while (mMorphRunning) {
-                float alpha = Math.abs(mMorphAlpha);
+                float alpha = 1 - Math.abs(mMorphAlpha);
                 MorpherApi.morphToBitmap(mFaceImages[0].bitmap,
                         mFaceImages[1].bitmap, mOutputBitmap,
                         mFaceImages[0].points, mFaceImages[1].points,
