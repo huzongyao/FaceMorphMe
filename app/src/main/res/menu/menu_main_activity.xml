@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <item android:title="@string/about"
-        app:showAsAction="never" 
-        android:id="@+id/main_menu_about"/>
-
-    <item android:title="@string/detect_face"
-        app:showAsAction="never"
-        android:id="@+id/main_menu_face_detect"/>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/main_menu_settings"
+        android:title="@string/settings"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/main_menu_about"
+        android:title="@string/about"
+        app:showAsAction="never" />
 </menu>

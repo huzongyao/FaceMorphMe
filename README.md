@@ -76,6 +76,7 @@ void warpAffine( InputArray src, OutputArray dst,
 #### Reference
 1. https://www.learnopencv.com/face-morph-using-opencv-cpp-python/
 2. https://github.com/Yalantis/uCrop
+3. https://github.com/bilibili/BurstLinker
 
 ### About Me
  * GitHub: [https://huzongyao.github.io/](https://huzongyao.github.io/)

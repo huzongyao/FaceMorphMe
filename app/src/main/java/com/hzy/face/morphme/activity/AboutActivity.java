@@ -61,6 +61,7 @@ public class AboutActivity extends AppCompatActivity {
                 ARouter.getInstance().build(RouterHub.VERSION_INFO_ACTIVITY).navigation();
                 break;
             case R.id.source_code_item:
+                WebViewActivity.startUrl(getString(R.string.github_project_page));
                 break;
             case R.id.about_me_item:
                 WebViewActivity.startUrl(getString(R.string.github_user_page));

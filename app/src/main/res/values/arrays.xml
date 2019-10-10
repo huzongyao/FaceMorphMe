@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="face_detect_entry">
+        <item>Face Landmarks</item>
+        <item>Face Division</item>
+        <item>Face Rect</item>
+    </string-array>
+    <string-array name="pref_resolution_array">
+        <item>240x320</item>
+        <item>270x360</item>
+        <item>300x400</item>
+        <item>360x480</item>
+        <item>480x640</item>
+        <item>600x800</item>
+        <item>720x960</item>
+        <item>960x1280</item>
+    </string-array>
+    <string-array name="pref_resolution_value">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+    </string-array>
+    <string-array name="pref_frames_array">
+        <item>5</item>
+        <item>8</item>
+        <item>12</item>
+        <item>16</item>
+        <item>20</item>
+        <item>30</item>
+        <item>50</item>
+    </string-array>
+    <string-array name="pref_frames_value">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+    </string-array>
+</resources>

@@ -9,4 +9,5 @@ public class RouterHub {
     public static final String SPLASH_ACTIVITY = "/main/SplashActivity";
     public static final String FACE_DETECT_ACTIVITY = "/main/FaceDetectActivity";
     public static final String TWO_MORPH_ACTIVITY = "/main/TwoMorphActivity";
+    public static final String SETTINGS_ACTIVITY = "/main/SettingsActivity";
 }

@@ -38,8 +38,8 @@ public class MainActivity extends AppCompatActivity {
             case R.id.main_menu_about:
                 ARouter.getInstance().build(RouterHub.ABOUT_ACTIVITY).navigation();
                 break;
-            case R.id.main_menu_face_detect:
-                ARouter.getInstance().build(RouterHub.FACE_DETECT_ACTIVITY).navigation();
+            case R.id.main_menu_settings:
+                ARouter.getInstance().build(RouterHub.SETTINGS_ACTIVITY).navigation();
                 break;
         }
         return super.onOptionsItemSelected(item);

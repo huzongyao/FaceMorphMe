@@ -44,6 +44,18 @@ public class MorpherApi {
         return nGetSubDivPointIndex(width, height, inArray);
     }
 
+    /**
+     * Morph with two bitmaps
+     *
+     * @param src     bitmap1
+     * @param dst     bitmap2
+     * @param morph   alpha bitmap
+     * @param pSrc    key points 1
+     * @param pDst    key points 2 with the same size of points 1
+     * @param indices points indies, with the right index, we can construct the triangles
+     * @param alpha   current alpha
+     * @return status
+     */
     public static int morphToBitmap(Bitmap src, Bitmap dst, Bitmap morph, PointF[] pSrc,
                                     PointF[] pDst, int[] indices, float alpha) {
         return nMorphToBitmap(src, dst, morph, MorphUtils.pointFArray2FloatArray(pSrc),

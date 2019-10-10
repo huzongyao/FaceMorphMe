@@ -3,6 +3,7 @@ package com.hzy.face.morphme.activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Point;
 import android.graphics.PointF;
 import android.net.Uri;
 import android.os.Bundle;
@@ -25,11 +26,11 @@ import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.hzy.face.morpher.MorpherApi;
 import com.hzy.face.morphme.R;
-import com.hzy.face.morphme.consts.AppConfigs;
 import com.hzy.face.morphme.consts.RequestCode;
 import com.hzy.face.morphme.consts.RouterHub;
 import com.hzy.face.morphme.utils.ActionUtils;
 import com.hzy.face.morphme.utils.CascadeUtils;
+import com.hzy.face.morphme.utils.ConfigUtils;
 import com.hzy.face.morphme.utils.SpaceUtils;
 import com.hzy.face.morphme.widget.Ratio34ImageView;
 import com.yalantis.ucrop.UCrop;
@@ -67,10 +68,13 @@ public class TwoMorphActivity extends AppCompatActivity {
     private volatile boolean mMorphRunning = false;
     private BurstLinker mBurstLinker;
     private String mGifFilePath;
+    private Point mImageSize;
+    private float mFrameSpace;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initConfigurations();
         setContentView(R.layout.activity_two_morph);
         ButterKnife.bind(this);
         ActionBar actionBar = getSupportActionBar();
@@ -86,8 +90,13 @@ public class TwoMorphActivity extends AppCompatActivity {
         mProgressDialog = new ProgressDialog(this);
         mProgressDialog.setMessage(getString(R.string.loading_wait_tips));
         mProgressDialog.setCancelable(false);
-        mOutputBitmap = Bitmap.createBitmap(AppConfigs.DEFAULT_MORPH_WIDTH,
-                AppConfigs.DEFAULT_MORPH_HEIGHT, Bitmap.Config.ARGB_8888);
+        mOutputBitmap = Bitmap.createBitmap(mImageSize.x, mImageSize.y, Bitmap.Config.ARGB_8888);
+    }
+
+    private void initConfigurations() {
+        mImageSize = ConfigUtils.getConfigResolution();
+        int frames = ConfigUtils.getConfigFrameCount();
+        mFrameSpace = (frames > 0) ? (1f / frames) : 0.1f;
     }
 
     @Override
@@ -150,8 +159,7 @@ public class TwoMorphActivity extends AppCompatActivity {
                         options.setMaxBitmapSize(16000);
                         UCrop.of(dataUri, Uri.fromFile(imgFile))
                                 .withOptions(options)
-                                .withMaxResultSize(AppConfigs.DEFAULT_MORPH_WIDTH,
-                                        AppConfigs.DEFAULT_MORPH_HEIGHT)
+                                .withMaxResultSize(mImageSize.x, mImageSize.y)
                                 .withAspectRatio(3, 4)
                                 .start(this, RequestCode.CROP_IMAGE);
                     }
@@ -230,11 +238,10 @@ public class TwoMorphActivity extends AppCompatActivity {
                     mBurstLinker.connect(mOutputBitmap, BurstLinker.KMEANS_QUANTIZER,
                             BurstLinker.M2_DITHER, 0, 0, 120);
                 }
-                mMorphAlpha += 0.075f;
+                mMorphAlpha += mFrameSpace;
                 if (mMorphAlpha > 1) {
                     mMorphAlpha = -1;
                     if (needSave) {
-                        // saving is done
                         mBurstLinker.release();
                         runOnUiThread(this::shareGifImage);
                         needSave = false;

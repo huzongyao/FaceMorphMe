@@ -48,5 +48,9 @@
             android:name=".activity.TwoMorphActivity"
             android:label="@string/two_images_morph"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.SettingsActivity"
+            android:label="@string/settings"
+            android:screenOrientation="portrait" />
     </application>
 </manifest>

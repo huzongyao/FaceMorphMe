@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string-array name="face_detect_entry">
-        <item>Face Landmarks</item>
-        <item>Face Division</item>
-        <item>Face Rect</item>
-    </string-array>
-</resources>
