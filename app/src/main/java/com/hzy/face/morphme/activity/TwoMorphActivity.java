@@ -70,6 +70,7 @@ public class TwoMorphActivity extends AppCompatActivity {
     private String mGifFilePath;
     private Point mImageSize;
     private float mFrameSpace;
+    private int mFrameDuration;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -97,6 +98,8 @@ public class TwoMorphActivity extends AppCompatActivity {
         mImageSize = ConfigUtils.getConfigResolution();
         int frames = ConfigUtils.getConfigFrameCount();
         mFrameSpace = (frames > 0) ? (1f / frames) : 0.1f;
+        int duration = ConfigUtils.getConfigDuration();
+        mFrameDuration = duration / frames;
     }
 
     @Override
@@ -236,7 +239,7 @@ public class TwoMorphActivity extends AppCompatActivity {
                 });
                 if (needSave) {
                     mBurstLinker.connect(mOutputBitmap, BurstLinker.KMEANS_QUANTIZER,
-                            BurstLinker.M2_DITHER, 0, 0, 120);
+                            BurstLinker.M2_DITHER, 0, 0, mFrameDuration);
                 }
                 mMorphAlpha += mFrameSpace;
                 if (mMorphAlpha > 1) {

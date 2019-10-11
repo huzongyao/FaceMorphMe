@@ -14,4 +14,11 @@
         android:key="@string/pref_frames_key"
         android:summary="@string/pref_frames_summary"
         android:title="@string/frame_count" />
+    <ListPreference
+        android:defaultValue="800"
+        android:entries="@array/pref_delay_array"
+        android:entryValues="@array/pref_delay_array"
+        android:key="@string/pref_delay_key"
+        android:summary="@string/pref_delay_summary"
+        android:title="@string/animation_delay" />
 </PreferenceScreen>

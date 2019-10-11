@@ -1,6 +1,7 @@
 <resources>
     <string name="pref_resolution_key" translatable="false">pref_resolution_key</string>
     <string name="pref_frames_key" translatable="false">pref_frames_key</string>
+    <string name="pref_delay_key" translatable="false">pref_delay_key</string>
 
     <string name="app_source_code" translatable="false">FaceMorphMe</string>
     <string name="github_project_page" translatable="false">https://github.com/huzongyao/FaceMorphMe</string>
@@ -32,4 +33,6 @@
     <string name="pref_resolution_summary">Resolution Of Bitmap %s</string>
     <string name="frame_count">Frame Count</string>
     <string name="pref_frames_summary">Frames Count Of One Transformation: %s</string>
+    <string name="animation_delay">Gif Transform Time</string>
+    <string name="pref_delay_summary">One Transformation Duration in ms: %s</string>
 </resources>

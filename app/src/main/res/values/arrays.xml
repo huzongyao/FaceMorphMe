@@ -43,4 +43,13 @@
         <item>5</item>
         <item>6</item>
     </string-array>
+    <string-array name="pref_delay_array">
+        <item>300</item>
+        <item>500</item>
+        <item>800</item>
+        <item>1000</item>
+        <item>2000</item>
+        <item>3000</item>
+        <item>5000</item>
+    </string-array>
 </resources>

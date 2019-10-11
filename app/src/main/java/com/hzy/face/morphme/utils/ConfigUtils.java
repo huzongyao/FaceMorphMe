@@ -52,4 +52,19 @@ public class ConfigUtils {
             return 0;
         }
     }
+
+    /**
+     * get transformation duration
+     *
+     * @return duration
+     */
+    public static int getConfigDuration() {
+        try {
+            SharedPreferences pref = getPrefrence();
+            String key = Utils.getApp().getString(R.string.pref_delay_key);
+            return Integer.parseInt(pref.getString(key, "800"));
+        } catch (Exception e) {
+            return 800;
+        }
+    }
 }

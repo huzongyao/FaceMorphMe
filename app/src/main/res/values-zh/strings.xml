@@ -23,4 +23,6 @@
     <string name="pref_resolution_summary">图像的分辨率：%s</string>
     <string name="frame_count">帧数</string>
     <string name="pref_frames_summary">一次切换的帧数：%s</string>
+    <string name="animation_delay">Gif切换时长</string>
+    <string name="pref_delay_summary">一次场景切换用时(毫秒): %s</string>
 </resources>

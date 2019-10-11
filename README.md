@@ -1,6 +1,15 @@
 # FaceMorphMe
 FaceMorph 在Android平台的实现
 
+#### Quick Start
+* 查看效果
+
+|  demo1       | 
+| ------------ | 
+|![demo1](https://github.com/huzongyao/FaceMorphMe/blob/master/misc/demo1.gif?raw=true)|
+
+* 下载App体验：[下载地址](https://github.com/huzongyao/FaceMorphMe/releases/latest)
+
 #### Details
 * FaceMorph是指将一张人脸照片平滑过渡到另一张，
 算法主要是参考这篇文章：[Face Morph Using OpenCV](https://www.learnopencv.com/face-morph-using-opencv-cpp-python/)。
