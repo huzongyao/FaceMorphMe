@@ -4,9 +4,9 @@ FaceMorph 在Android平台的实现
 #### Quick Start
 * 查看效果
 
-|  demo1       | 
-| ------------ | 
-|![demo1](https://github.com/huzongyao/FaceMorphMe/blob/master/misc/demo1.gif?raw=true)|
+|  demo1       | face detection | Delaunay triangulation |
+| ------------ | -------------- | ---------------------- |
+|![pic](https://github.com/huzongyao/FaceMorphMe/blob/master/misc/demo1.gif?raw=true)|![pic](https://github.com/huzongyao/FaceMorphMe/blob/master/misc/screen1.png?raw=true)|![pic](https://github.com/huzongyao/FaceMorphMe/blob/master/misc/screen2.png?raw=true)|
 
 * 下载App体验：[下载地址](https://github.com/huzongyao/FaceMorphMe/releases/latest)
 

@@ -16,7 +16,7 @@
     <string name="my_github">My GitHub</string>
     <string name="about">About</string>
     <string name="web_view_refresh">Refresh</string>
-    <string name="detect_face">Face Detect</string>
+    <string name="detect_face">Face Detection</string>
     <string name="load_bitmap">Choose Image</string>
     <string name="two_images_morph">Two Images Morph</string>
     <string name="tap_to_choose_images">Tap The Image To Choose</string>
