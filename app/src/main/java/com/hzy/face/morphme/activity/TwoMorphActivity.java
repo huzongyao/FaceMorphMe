@@ -71,6 +71,8 @@ public class TwoMorphActivity extends AppCompatActivity {
     private Point mImageSize;
     private float mFrameSpace;
     private int mFrameDuration;
+    private int mGifQuantizer;
+    private int mGifDitherer;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -100,6 +102,8 @@ public class TwoMorphActivity extends AppCompatActivity {
         mFrameSpace = (frames > 0) ? (1f / frames) : 0.1f;
         int duration = ConfigUtils.getConfigDuration();
         mFrameDuration = duration / frames;
+        mGifQuantizer = ConfigUtils.getConfigGifQuantizer();
+        mGifDitherer = ConfigUtils.getConfigGifDitherer();
     }
 
     @Override
@@ -238,8 +242,8 @@ public class TwoMorphActivity extends AppCompatActivity {
                     mAlphaText.setText(getString(R.string.alpha_format_text, alpha));
                 });
                 if (needSave) {
-                    mBurstLinker.connect(mOutputBitmap, BurstLinker.KMEANS_QUANTIZER,
-                            BurstLinker.M2_DITHER, 0, 0, mFrameDuration);
+                    mBurstLinker.connect(mOutputBitmap, mGifQuantizer,
+                            mGifDitherer, 0, 0, mFrameDuration);
                 }
                 mMorphAlpha += mFrameSpace;
                 if (mMorphAlpha > 1) {

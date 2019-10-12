@@ -8,15 +8,37 @@ public class MorpherApi {
 
     public static final boolean NATIVE_POINTF = false;
 
+    /**
+     * detect faces from a bitmap
+     *
+     * @param bitmap         bitmap
+     * @param classifierPath model file path
+     * @return face rects, could be more than one
+     */
     public static RectF[] detectFaceRect(Bitmap bitmap, String classifierPath) {
         float[] floats = nDetectFaceRect(bitmap, classifierPath);
         return MorphUtils.floatArray2RectFArray(floats);
     }
 
+    /**
+     * detect the face landmark points in a bitmap
+     *
+     * @param bitmap         bitmap
+     * @param classifierPath classifier directory, ensure model files is there
+     * @return points
+     */
     public static PointF[] detectFaceLandmarks(Bitmap bitmap, String classifierPath) {
         return detectFaceLandmarks(bitmap, classifierPath, false);
     }
 
+    /**
+     * detect the face landmark points in a bitmap
+     *
+     * @param bitmap         bitmap
+     * @param classifierPath classifier directory
+     * @param withCorners    if you need bitmap border key points(for triangulation the whole image)
+     * @return points
+     */
     public static PointF[] detectFaceLandmarks(Bitmap bitmap, String classifierPath, boolean withCorners) {
         PointF[] points;
         if (NATIVE_POINTF) {
@@ -28,6 +50,14 @@ public class MorpherApi {
         return points;
     }
 
+    /**
+     * detect the face landmark points in a bitmap like detectFaceLandmarks,
+     * but the points are ordered with triangles that could divide the whole image
+     *
+     * @param bitmap         bitmap
+     * @param classifierPath classifier directory
+     * @return triangle vertexes [tr1.a, tr1.b, tr1.c, tr2.a, ...]
+     */
     public static PointF[] getFaceSubDiv(Bitmap bitmap, String classifierPath) {
         PointF[] points;
         if (NATIVE_POINTF) {
@@ -39,6 +69,15 @@ public class MorpherApi {
         return points;
     }
 
+    /**
+     * Delaunay Triangulation with the size of the image, and the key points
+     * with the indices and the points, we can reconstruct all the triangles
+     *
+     * @param width  width
+     * @param height height
+     * @param points key points
+     * @return the indices of points
+     */
     public static int[] getSubDivPointIndex(int width, int height, PointF[] points) {
         float[] inArray = MorphUtils.pointFArray2FloatArray(points);
         return nGetSubDivPointIndex(width, height, inArray);
@@ -53,7 +92,7 @@ public class MorpherApi {
      * @param pSrc    key points 1
      * @param pDst    key points 2 with the same size of points 1
      * @param indices points indies, with the right index, we can construct the triangles
-     * @param alpha   current alpha
+     * @param alpha   current alpha [0, 1]
      * @return status
      */
     public static int morphToBitmap(Bitmap src, Bitmap dst, Bitmap morph, PointF[] pSrc,

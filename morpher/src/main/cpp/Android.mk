@@ -5,6 +5,8 @@ OPENCV_LIB_TYPE := STATIC
 
 # You Should Copy OpenCV STATIC libs to ./opencv First!
 # Or Errors: [opencv/jni/OpenCV.mk: No such file or directory]
+# download libOpenCV and unzip to ./opencv
+# https://github.com/huzongyao/FaceMorphMe/releases/download/v1.0.0/libopencv-3.4.7.7z
 include $(LOCAL_PATH)/opencv/jni/OpenCV.mk
 
 

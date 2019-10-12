@@ -52,4 +52,32 @@
         <item>3000</item>
         <item>5000</item>
     </string-array>
+    <string-array name="pref_quantizer_array">
+        <item>Uniform</item>
+        <item>MedianCut</item>
+        <item>KMeans</item>
+        <item>Random</item>
+        <item>Octree</item>
+        <item>NeuQuant</item>
+    </string-array>
+    <string-array name="pref_quantizer_value">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </string-array>
+    <string-array name="pref_ditherer_array">
+        <item>No</item>
+        <item>M2</item>
+        <item>Bayer</item>
+        <item>FloydSteinberg</item>
+    </string-array>
+    <string-array name="pref_ditherer_value">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
 </resources>

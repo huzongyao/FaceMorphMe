@@ -23,6 +23,11 @@
     <string name="pref_resolution_summary">图像的分辨率：%s</string>
     <string name="frame_count">帧数</string>
     <string name="pref_frames_summary">一次切换的帧数：%s</string>
-    <string name="animation_delay">Gif切换时长</string>
+    <string name="animation_delay">切换时长</string>
     <string name="pref_delay_summary">一次场景切换用时(毫秒): %s</string>
+    <string name="gif_output_settings">GIF 输出配置</string>
+    <string name="gif_encode_quantizer">Quantizer</string>
+    <string name="gif_encode_ditherer">Ditherer</string>
+    <string name="pref_ditherer_summary">编码器 Ditherer: %s</string>
+    <string name="pref_quantizer_summary">编码器 Quantizer: %s</string>
 </resources>

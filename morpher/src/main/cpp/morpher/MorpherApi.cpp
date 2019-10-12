@@ -31,6 +31,7 @@ JNI_FUNC(nDetectFaceRect)(JNIEnv *env, jclass type, jobject bitmap, jstring clas
     void *pixels = lockAndroidBitmap(env, bitmap, info);
     assert(pixels != nullptr);
     Mat image(info.height, info.width, CV_8UC4, pixels);
+    // convert to gray map
     cvtColor(image, gray, CV_RGBA2GRAY);
     AndroidBitmap_unlockPixels(env, bitmap);
     std::vector<Rect> faces;
@@ -183,6 +184,7 @@ JNI_FUNC(nMorphToBitmap)(JNIEnv *env, jclass type, jobject src, jobject dst, job
     Mat outMat = lockAndroidBitmapMat(env, morph);
     Mat outMat32;
 
+    // operate with float32 for better color accuracy
     srcMat.convertTo(srcMat, CV_32F);
     dstMat.convertTo(dstMat, CV_32F);
     outMat.convertTo(outMat32, CV_32F);
@@ -210,9 +212,11 @@ JNI_FUNC(nMorphToBitmap)(JNIEnv *env, jclass type, jobject src, jobject dst, job
         t.push_back(pOut[y]);
         t.push_back(pOut[z]);
 
+        // Morph with every single triangle
         MorphUtils::morphTriangle(srcMat, dstMat, outMat32, t1, t2, t, alpha);
     }
 
+    // write color map back to bitmap
     outMat32.convertTo(outMat, CV_8U);
 
     AndroidBitmap_unlockPixels(env, morph);

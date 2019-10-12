@@ -4,7 +4,7 @@ FaceMorph 在Android平台的实现
 #### Quick Start
 * 查看效果
 
-|  Face Detection | Delaunay triangulation | Face Morphing |
+|  Face Detection | Delaunay Triangulation | Face Morphing |
 | ------------ | -------------- | ---------------------- |
 |![pic](https://github.com/huzongyao/FaceMorphMe/blob/master/misc/screen1.png?raw=true)|![pic](https://github.com/huzongyao/FaceMorphMe/blob/master/misc/screen2.png?raw=true)|![pic](https://github.com/huzongyao/FaceMorphMe/blob/master/misc/demo1.gif?raw=true)|
 
@@ -38,6 +38,14 @@ make: *** No rule to make target `morpher/src/main/cpp/opencv/jni/OpenCV.mk'.  S
 
 ##### Process:
 1. 人脸识别，人脸关键点识别
+ * OpenCV提供了一个简单的人脸识别功能和一些简单的模型，使用方式简单：
+``` c++
+CascadeClassifier cascade(classifierPath);
+// 如果是彩图可以先转成灰度图
+cvtColor(image, gray, CV_RGBA2GRAY);
+std::vector<Rect> faces;
+cascade.detectMultiScale(gray, faces);
+```
  * 人脸关键点识别一般可以采用[Dlib](http://dlib.net/)或者
  [Stasm](http://www.milbo.users.sonic.net/stasm/) + [OpenCV](https://opencv.org/),
  * 使用Dlib的话可以参照[face_landmark_detection](http://dlib.net/face_landmark_detection_ex.cpp.html)

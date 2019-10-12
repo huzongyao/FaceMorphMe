@@ -34,14 +34,45 @@ extern "C" {
 
 using namespace cv;
 
+/**
+ * lock android bitmap and return data and write info
+ * @param env
+ * @param bitmap
+ * @param info
+ * @return data
+ */
 void *lockAndroidBitmap(JNIEnv *env, jobject bitmap, AndroidBitmapInfo &info);
 
+/**
+ * lock android bitmap and convert to RGBA8888 Mat, input must be RGBA8888 bitmap
+ * @param env
+ * @param bitmap
+ * @return mat
+ */
 Mat lockAndroidBitmapMat(JNIEnv *env, jobject bitmap);
 
+/**
+ * convert points to android PointF array
+ * @param env
+ * @param points
+ * @return
+ */
 jobjectArray point2fVector2APointFArray(JNIEnv *env, const std::vector<Point2f> &points);
 
+/**
+ * convert points to java float array
+ * @param env
+ * @param points
+ * @return [x1, y1, x2, y2, ...]
+ */
 jfloatArray point2fVector2AFloatArray(JNIEnv *env, const std::vector<Point2f> &points);
 
+/**
+ * convert rects to java float array
+ * @param env
+ * @param rects
+ * @return
+ */
 jfloatArray rectVector2AFloatArray(JNIEnv *env, const std::vector<Rect> &rects);
 
 /**

@@ -67,4 +67,24 @@ public class ConfigUtils {
             return 800;
         }
     }
+
+    public static int getConfigGifQuantizer() {
+        try {
+            SharedPreferences pref = getPrefrence();
+            String key = Utils.getApp().getString(R.string.pref_quantizer_key);
+            return Integer.parseInt(pref.getString(key, "2"));
+        } catch (Exception e) {
+            return 2;
+        }
+    }
+
+    public static int getConfigGifDitherer() {
+        try {
+            SharedPreferences pref = getPrefrence();
+            String key = Utils.getApp().getString(R.string.pref_ditherer_key);
+            return Integer.parseInt(pref.getString(key, "0"));
+        } catch (Exception e) {
+            return 0;
+        }
+    }
 }
