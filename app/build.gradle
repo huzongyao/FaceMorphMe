@@ -37,7 +37,7 @@ android {
             signingConfig signingConfigs.demokey
         }
         release {
-            minifyEnabled false
+            minifyEnabled true
             signingConfig signingConfigs.demokey
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }

@@ -105,3 +105,7 @@ void warpAffine( InputArray src, OutputArray dst,
  * Gmail: [hzy3774@gmail.com](mailto:hzy3774@gmail.com)
  * Foxmail: [hzy3774@qq.com](mailto:hzy3774@qq.com)
  * WeChat: hzy3774
+
+### Others
+ * 想捐赠我喝杯热水(¥0.01起捐)</br>
+ ![donate](https://github.com/huzongyao/JChineseChess/blob/master/misc/donate.png?raw=true)
