@@ -106,7 +106,11 @@ JNI_FUNC(nGetFaceSubDiv)(JNIEnv *env, jclass type, jobject bitmap,
     Rect rect(0, 0, info.width, info.height);
     Subdiv2D subDiv(rect);
     subDiv.insert(cornerPts);
-    subDiv.insert(facePts);
+    for (auto point : facePts) {
+        if (point.inside(rect)) {
+            subDiv.insert(point);
+        }
+    }
 
     std::vector<Point2f> trianglePts;
     MorphUtils::getTrianglesPoints(subDiv, trianglePts);
@@ -138,8 +142,11 @@ JNI_FUNC(nGetFaceSubDivFArray)(JNIEnv *env, jclass type, jobject bitmap,
     Rect rect(0, 0, info.width, info.height);
     Subdiv2D subDiv(rect);
     subDiv.insert(cornerPts);
-    subDiv.insert(facePts);
-
+    for (auto point : facePts) {
+        if (point.inside(rect)) {
+            subDiv.insert(point);
+        }
+    }
     std::vector<Point2f> trianglePts;
     MorphUtils::getTrianglesPoints(subDiv, trianglePts);
 
@@ -162,7 +169,11 @@ JNI_FUNC(nGetSubDivPointIndex)(JNIEnv *env, jclass type, jint width,
     jFloatArray2point2fVector(env, points_, inPoints);
     Rect rect(0, 0, width, height);
     Subdiv2DIndex subDiv(rect);
-    subDiv.insert(inPoints);
+    for (auto point : inPoints) {
+        if (point.inside(rect)) {
+            subDiv.insert(point);
+        }
+    }
     std::vector<int> triangleIndices;
     subDiv.getTrianglesIndices(triangleIndices);
     int count = triangleIndices.size();
