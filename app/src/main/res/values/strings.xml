@@ -42,4 +42,7 @@
     <string name="gif_encode_ditherer">Ditherer</string>
     <string name="pref_ditherer_summary">Encoder Ditherer: %s</string>
     <string name="pref_quantizer_summary">Encoder Quantizer: %s</string>
+    <string name="share_image">Share Image</string>
+    <string name="result_gif">Result Gif</string>
+    <string name="morphing_please_wait">Processing, Please Wait!!</string>
 </resources>

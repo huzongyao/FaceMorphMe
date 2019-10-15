@@ -18,9 +18,9 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.bilibili.burstlinker.BurstLinker;
 import com.blankj.utilcode.util.ImageUtils;
-import com.blankj.utilcode.util.IntentUtils;
 import com.blankj.utilcode.util.SnackbarUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
@@ -104,6 +104,12 @@ public class TwoMorphActivity extends AppCompatActivity {
         mFrameDuration = duration / frames;
         mGifQuantizer = ConfigUtils.getConfigGifQuantizer();
         mGifDitherer = ConfigUtils.getConfigGifDitherer();
+    }
+
+    @Override
+    protected void onPause() {
+        mMorphRunning = false;
+        super.onPause();
     }
 
     @Override
@@ -214,10 +220,18 @@ public class TwoMorphActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Start To processing the images
+     *
+     * @param isSave if you want to save gif
+     */
     private void startMorphProcess(boolean isSave) {
         if (!mFaceImages[0].prepared || !mFaceImages[1].prepared) {
             ToastUtils.showShort(R.string.choose_images_first);
             return;
+        }
+        if (isSave) {
+            snakeBarShow(getString(R.string.morphing_please_wait));
         }
         mFaceExecutor.submit(() -> morphToBitmapAsync(isSave));
     }
@@ -250,7 +264,7 @@ public class TwoMorphActivity extends AppCompatActivity {
                     mMorphAlpha = -1;
                     if (needSave) {
                         mBurstLinker.release();
-                        runOnUiThread(this::shareGifImage);
+                        runOnUiThread(this::routerShareGifImage);
                         needSave = false;
                     }
                 }
@@ -261,10 +275,11 @@ public class TwoMorphActivity extends AppCompatActivity {
         }
     }
 
-    private void shareGifImage() {
+    private void routerShareGifImage() {
         if (!StringUtils.isTrimEmpty(mGifFilePath)) {
-            Intent intent = IntentUtils.getShareImageIntent("", mGifFilePath);
-            startActivity(Intent.createChooser(intent, getString(R.string.share_to)));
+            ARouter.getInstance().build(RouterHub.GIF_RESULT_ACTIVITY)
+                    .withString(GifResultActivity.EXTRA_FILE_PATH, mGifFilePath)
+                    .navigation(this);
         }
     }
 
