@@ -74,7 +74,7 @@ JNI_FUNC(nDetectFaceFArray)(JNIEnv *env, jclass type, jobject bitmap, jstring im
     cvtColor(image, gray, CV_RGBA2GRAY);
     AndroidBitmap_unlockPixels(env, bitmap);
     std::vector<Point2f> points = Feature::detectFace(gray, imgPath, classifierPath);
-    if (isCorner == JNI_TRUE && points.size() > 0) {
+    if (isCorner == JNI_TRUE && !points.empty()) {
         MorphUtils::getImageCornerPoints(info.width, info.height, points);
     }
     env->ReleaseStringUTFChars(imgPath_, imgPath);
@@ -106,7 +106,7 @@ JNI_FUNC(nGetFaceSubDiv)(JNIEnv *env, jclass type, jobject bitmap,
     Rect rect(0, 0, info.width, info.height);
     Subdiv2D subDiv(rect);
     subDiv.insert(cornerPts);
-    for (auto point : facePts) {
+    for (const auto &point : facePts) {
         if (point.inside(rect)) {
             subDiv.insert(point);
         }
@@ -142,7 +142,7 @@ JNI_FUNC(nGetFaceSubDivFArray)(JNIEnv *env, jclass type, jobject bitmap,
     Rect rect(0, 0, info.width, info.height);
     Subdiv2D subDiv(rect);
     subDiv.insert(cornerPts);
-    for (auto point : facePts) {
+    for (const auto &point : facePts) {
         if (point.inside(rect)) {
             subDiv.insert(point);
         }
@@ -169,7 +169,7 @@ JNI_FUNC(nGetSubDivPointIndex)(JNIEnv *env, jclass type, jint width,
     jFloatArray2point2fVector(env, points_, inPoints);
     Rect rect(0, 0, width, height);
     Subdiv2DIndex subDiv(rect);
-    for (auto point : inPoints) {
+    for (const auto &point : inPoints) {
         if (point.inside(rect)) {
             subDiv.insert(point);
         }
