@@ -29,7 +29,7 @@ public class ActionUtils {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT).setType("image/*")
                 .addCategory(Intent.CATEGORY_OPENABLE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            String[] mimeTypes = {"image/jpeg", "image/png"};
+            String[] mimeTypes = {"image/jpeg", "image/png", "image/gif"};
             intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
         }
         intent = Intent.createChooser(intent, null);

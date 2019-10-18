@@ -56,5 +56,9 @@
             android:name=".activity.GifResultActivity"
             android:label="@string/result_gif"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.MorphVideoActivity"
+            android:label="@string/video_export_morph"
+            android:screenOrientation="portrait" />
     </application>
 </manifest>

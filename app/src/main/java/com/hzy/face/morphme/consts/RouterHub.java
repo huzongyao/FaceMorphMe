@@ -11,4 +11,5 @@ public class RouterHub {
     public static final String TWO_MORPH_ACTIVITY = "/main/TwoMorphActivity";
     public static final String SETTINGS_ACTIVITY = "/main/SettingsActivity";
     public static final String GIF_RESULT_ACTIVITY = "/main/GifResultActivity";
+    public static final String VIDEO_MORPH_ACTIVITY = "/main/MorphVideoActivity";
 }

@@ -36,13 +36,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_head" />
-
-                <ProgressBar
-                    android:id="@+id/image_progress_first"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:visibility="gone" />
             </FrameLayout>
 
             <View
@@ -61,13 +54,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_head" />
-
-                <ProgressBar
-                    android:id="@+id/image_progress_second"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:visibility="gone" />
             </FrameLayout>
         </LinearLayout>
 
@@ -88,13 +74,6 @@
                     android:id="@+id/imageview_output"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
-
-                <ProgressBar
-                    android:id="@+id/image_progress_output"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:visibility="gone" />
             </FrameLayout>
 
             <View
@@ -110,18 +89,20 @@
                 android:orientation="vertical"
                 android:padding="6dp">
 
-                <Button
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btn_start_morph"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/start_to_morph" />
+                    android:text="@string/start_to_morph"
+                    android:theme="@style/AppTheme.Button" />
 
-                <Button
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btn_save_gif"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="@string/save_gif" />
+                    android:text="@string/save_gif"
+                    android:theme="@style/AppTheme.Button" />
 
                 <TextView
                     android:id="@+id/alpha_text"

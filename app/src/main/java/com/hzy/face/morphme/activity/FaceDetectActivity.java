@@ -1,9 +1,11 @@
 package com.hzy.face.morphme.activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.PointF;
 import android.graphics.RectF;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,14 +20,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.blankj.utilcode.util.ImageUtils;
 import com.blankj.utilcode.util.SnackbarUtils;
+import com.bumptech.glide.Glide;
 import com.hzy.face.morpher.MorpherApi;
 import com.hzy.face.morphme.R;
-import com.hzy.face.morphme.consts.AppConfigs;
 import com.hzy.face.morphme.consts.RequestCode;
 import com.hzy.face.morphme.consts.RouterHub;
 import com.hzy.face.morphme.utils.ActionUtils;
 import com.hzy.face.morphme.utils.BitmapDrawUtils;
 import com.hzy.face.morphme.utils.CascadeUtils;
+import com.hzy.face.morphme.utils.SpaceUtils;
+import com.yalantis.ucrop.UCrop;
+
+import java.io.File;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -41,6 +47,8 @@ public class FaceDetectActivity extends AppCompatActivity {
 
     private Bitmap mDemoBitmap;
     private int mSelectTypeIndex;
+    private ProgressDialog mProgressDialog;
+    private String mSelectPath;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -51,6 +59,9 @@ public class FaceDetectActivity extends AppCompatActivity {
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
+        mProgressDialog = new ProgressDialog(this);
+        mProgressDialog.setMessage(getString(R.string.loading_wait_tips));
+        mProgressDialog.setCancelable(false);
         mTypeSelectSpinner.setOnItemSelectedListener(getTypeSelectListener());
     }
 
@@ -79,7 +90,8 @@ public class FaceDetectActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @OnClick({R.id.btn_load_img, R.id.btn_detect_face})
+    @OnClick({R.id.btn_load_img,
+            R.id.btn_detect_face})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_load_img:
@@ -92,9 +104,10 @@ public class FaceDetectActivity extends AppCompatActivity {
     }
 
     private void detectFromBitmap() {
+        mDemoBitmap = ImageUtils.getBitmap(mSelectPath);
         if (mDemoBitmap != null && !mDemoBitmap.isRecycled()) {
+            mProgressDialog.show();
             mImageView.setImageBitmap(mDemoBitmap);
-            snakeBarShow("Detecting... Please Wait!!");
             new Thread() {
                 @Override
                 public void run() {
@@ -124,6 +137,7 @@ public class FaceDetectActivity extends AppCompatActivity {
         }
         mImageView.post(() -> {
             mImageView.setImageBitmap(bitmap);
+            mProgressDialog.dismiss();
             snakeBarShow("Face Detect Finished!!");
         });
     }
@@ -134,16 +148,29 @@ public class FaceDetectActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        // choose a image
         if (requestCode == RequestCode.CHOOSE_IMAGE) {
             if (resultCode == RESULT_OK) {
-                Bitmap bitmap = ActionUtils.getBitmapFromPickerIntent(data, getContentResolver());
-                if (bitmap != null) {
-                    if (mDemoBitmap != null) {
-                        mDemoBitmap.recycle();
+                if (data != null) {
+                    Uri dataUri = data.getData();
+                    if (dataUri != null) {
+                        File imgFile = SpaceUtils.newUsableFile();
+                        mSelectPath = imgFile.getPath();
+                        UCrop.Options options = new UCrop.Options();
+                        options.setCompressionQuality(100);
+                        UCrop.of(dataUri, Uri.fromFile(imgFile))
+                                .withOptions(options)
+                                .withMaxResultSize(360, 480)
+                                .withAspectRatio(3, 4)
+                                .start(this, RequestCode.CROP_IMAGE);
                     }
-                    mDemoBitmap = ImageUtils.compressBySampleSize(bitmap,
-                            AppConfigs.MAX_BITMAP_SIZE, AppConfigs.MAX_BITMAP_SIZE, true);
-                    mImageView.setImageBitmap(mDemoBitmap);
+                }
+            }
+        } else if (requestCode == RequestCode.CROP_IMAGE) {
+            // crop a image
+            if (resultCode == RESULT_OK) {
+                if (data != null) {
+                    Glide.with(this).load(mSelectPath).into(mImageView);
                 }
             }
         }

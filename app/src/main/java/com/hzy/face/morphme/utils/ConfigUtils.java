@@ -54,14 +54,29 @@ public class ConfigUtils {
     }
 
     /**
-     * get transformation duration
+     * gif duration for one transformation
      *
      * @return duration
      */
-    public static int getConfigDuration() {
+    public static int getConfigGifDuration() {
         try {
             SharedPreferences pref = getPrefrence();
-            String key = Utils.getApp().getString(R.string.pref_delay_key);
+            String key = Utils.getApp().getString(R.string.pref_gif_delay_key);
+            return Integer.parseInt(pref.getString(key, "800"));
+        } catch (Exception e) {
+            return 800;
+        }
+    }
+
+    /**
+     * video duration for one transformation
+     *
+     * @return duration
+     */
+    public static int getConfigMp4Duration() {
+        try {
+            SharedPreferences pref = getPrefrence();
+            String key = Utils.getApp().getString(R.string.pref_video_delay_key);
             return Integer.parseInt(pref.getString(key, "800"));
         } catch (Exception e) {
             return 800;

@@ -45,7 +45,9 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @OnClick({R.id.btn_two_images, R.id.btn_detect_face})
+    @OnClick({R.id.btn_two_images,
+            R.id.btn_detect_face,
+            R.id.btn_video_export})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_two_images:
@@ -53,6 +55,9 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.btn_detect_face:
                 ARouter.getInstance().build(RouterHub.FACE_DETECT_ACTIVITY).navigation();
+                break;
+            case R.id.btn_video_export:
+                ARouter.getInstance().build(RouterHub.VIDEO_MORPH_ACTIVITY).navigation();
                 break;
         }
     }

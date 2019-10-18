@@ -2,7 +2,6 @@ package com.hzy.face.morphme.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,6 +23,7 @@ import com.blankj.utilcode.util.NetworkUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.hzy.face.morphme.R;
 import com.hzy.face.morphme.consts.RouterHub;
+import com.hzy.face.morphme.utils.ActionUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -96,12 +96,8 @@ public class WebViewActivity extends AppCompatActivity {
     }
 
     private DownloadListener getDownloadListener() {
-        return (url, userAgent, contentDisposition, mimetype, contentLength) -> {
-            Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.addCategory(Intent.CATEGORY_BROWSABLE);
-            intent.setData(Uri.parse(url));
-            startActivity(intent);
-        };
+        return (url, userAgent, contentDisposition, mimetype, contentLength) ->
+                ActionUtils.startViewAction(url);
     }
 
     private WebViewClient getWebViewClient() {

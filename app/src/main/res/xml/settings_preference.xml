@@ -19,7 +19,7 @@
             android:defaultValue="800"
             android:entries="@array/pref_delay_array"
             android:entryValues="@array/pref_delay_array"
-            android:key="@string/pref_delay_key"
+            android:key="@string/pref_gif_delay_key"
             android:summary="@string/pref_delay_summary"
             android:title="@string/animation_delay" />
         <ListPreference
@@ -36,5 +36,14 @@
             android:key="@string/pref_ditherer_key"
             android:summary="@string/pref_ditherer_summary"
             android:title="@string/gif_encode_ditherer" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/video_output_settings">
+        <ListPreference
+            android:defaultValue="800"
+            android:entries="@array/pref_delay_array"
+            android:entryValues="@array/pref_delay_array"
+            android:key="@string/pref_video_delay_key"
+            android:summary="@string/pref_delay_summary"
+            android:title="@string/animation_delay" />
     </PreferenceCategory>
 </PreferenceScreen>

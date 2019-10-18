@@ -1,9 +1,10 @@
 <resources>
     <string name="pref_resolution_key" translatable="false">pref_resolution_key</string>
     <string name="pref_frames_key" translatable="false">pref_frames_key</string>
-    <string name="pref_delay_key" translatable="false">pref_delay_key</string>
+    <string name="pref_gif_delay_key" translatable="false">pref_gif_delay_key</string>
     <string name="pref_ditherer_key" translatable="false">pref_ditherer_key</string>
     <string name="pref_quantizer_key" translatable="false">pref_quantizer_key</string>
+    <string name="pref_video_delay_key" translatable="false">pref_video_delay_key</string>
 
     <string name="app_source_code" translatable="false">FaceMorphMe</string>
     <string name="github_project_page" translatable="false">https://github.com/huzongyao/FaceMorphMe</string>
@@ -45,4 +46,9 @@
     <string name="share_image">Share Image</string>
     <string name="result_gif">Result Gif</string>
     <string name="morphing_please_wait">Processing, Please Wait!!</string>
+    <string name="video_export_morph">Video Export Morph</string>
+    <string name="save_video">Save Video</string>
+    <string name="cancel">Cancel</string>
+    <string name="select_2images_tips">Please Select At Least 2 Images!</string>
+    <string name="video_output_settings">Video Output Settings</string>
 </resources>

@@ -18,18 +18,28 @@
             android:text="@string/app_name"
             android:textSize="26sp" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_two_images"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="@string/two_images_morph" />
+            android:text="@string/two_images_morph"
+            android:theme="@style/AppTheme.Button" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_video_export"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/video_export_morph"
+            android:theme="@style/AppTheme.Button" />
+
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_detect_face"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="@string/detect_face" />
+            android:text="@string/detect_face"
+            android:theme="@style/AppTheme.Button" />
     </LinearLayout>
 </ScrollView>

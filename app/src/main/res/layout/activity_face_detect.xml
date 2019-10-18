@@ -24,20 +24,22 @@
             android:layout_marginTop="10dp"
             android:orientation="horizontal">
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_load_img"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/load_bitmap" />
+                android:text="@string/load_bitmap"
+                android:theme="@style/AppTheme.Button" />
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_detect_face"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_weight="1"
-                android:text="@string/detect_face" />
+                android:text="@string/detect_face"
+                android:theme="@style/AppTheme.Button" />
         </LinearLayout>
 
         <FrameLayout
@@ -55,13 +57,13 @@
                 android:spinnerMode="dialog" />
         </FrameLayout>
 
-        <ImageView
+        <com.hzy.face.morphme.widget.Ratio34ImageView
             android:id="@+id/demo_image"
-            android:layout_width="match_parent"
-            android:layout_height="360dp"
-            android:src="@drawable/ic_head"
-            android:layout_marginTop="10dp"
+            android:layout_width="240dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:background="@drawable/back_rectangle"
-            android:padding="1px" />
+            android:padding="1px"
+            android:src="@drawable/ic_head" />
     </LinearLayout>
 </ScrollView>

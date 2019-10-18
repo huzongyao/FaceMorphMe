@@ -10,19 +10,27 @@
         android:background="@drawable/back_rect_round"
         android:gravity="center_horizontal"
         android:orientation="vertical"
-        android:padding="10dp">
+        android:padding="20dp">
 
-        <com.hzy.face.morphme.widget.Ratio34ImageView
-            android:id="@+id/gif_image_view"
-            android:layout_width="200dp"
+        <FrameLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp" />
+            android:layout_marginTop="10dp"
+            android:background="@drawable/back_rectangle"
+            android:padding="1px">
 
-        <Button
+            <com.hzy.face.morphme.widget.Ratio34ImageView
+                android:id="@+id/gif_image_view"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content" />
+        </FrameLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/share_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="@string/share_image" />
+            android:layout_marginTop="20dp"
+            android:text="@string/share_image"
+            android:theme="@style/AppTheme.Button" />
     </LinearLayout>
 </ScrollView>
