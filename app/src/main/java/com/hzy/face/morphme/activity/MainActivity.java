@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick({R.id.btn_two_images,
             R.id.btn_detect_face,
+            R.id.btn_settings,
             R.id.btn_video_export})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -58,6 +59,9 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.btn_video_export:
                 ARouter.getInstance().build(RouterHub.VIDEO_MORPH_ACTIVITY).navigation();
+                break;
+            case R.id.btn_settings:
+                ARouter.getInstance().build(RouterHub.SETTINGS_ACTIVITY).navigation();
                 break;
         }
     }

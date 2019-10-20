@@ -160,6 +160,7 @@ public class MorphVideoActivity extends AppCompatActivity {
         mSourceRecyclerList.addOnItemTouchListener(mSourceListener);
         mSourceRecyclerList.setAdapter(mSourceAdapter);
         initPageDialogs();
+        snakeBarShow(getString(R.string.image_long_touch_tips));
     }
 
     private void initPageDialogs() {

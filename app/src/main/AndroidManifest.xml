@@ -46,7 +46,7 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".activity.TwoMorphActivity"
-            android:label="@string/two_images_morph"
+            android:label="@string/morph_to_gif"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.SettingsActivity"

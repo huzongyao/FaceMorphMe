@@ -21,7 +21,7 @@
     <string name="web_view_refresh">Refresh</string>
     <string name="detect_face">Face Detection</string>
     <string name="load_bitmap">Choose Image</string>
-    <string name="two_images_morph">Two Images Morph</string>
+    <string name="morph_to_gif">Morph To Gif</string>
     <string name="tap_to_choose_images">Tap The Image To Choose</string>
     <string name="start_to_morph">Start Morph</string>
     <string name="no_face_detected">No Face Detected!</string>
@@ -46,9 +46,10 @@
     <string name="share_image">Share Image</string>
     <string name="result_gif">Result Gif</string>
     <string name="morphing_please_wait">Processing, Please Wait!!</string>
-    <string name="video_export_morph">Video Export Morph</string>
+    <string name="video_export_morph">Morph To Video</string>
     <string name="save_video">Save Video</string>
     <string name="cancel">Cancel</string>
     <string name="select_2images_tips">Please Select At Least 2 Images!</string>
     <string name="video_output_settings">Video Output Settings</string>
+    <string name="image_long_touch_tips">Long Click To Delete Or Reorder!</string>
 </resources>

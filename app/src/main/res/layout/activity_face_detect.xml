@@ -29,6 +29,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:drawableLeft="@drawable/ic_open_folder"
                 android:text="@string/load_bitmap"
                 android:theme="@style/AppTheme.Button" />
 
@@ -38,6 +39,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_weight="1"
+                android:drawableLeft="@drawable/ic_face_detect"
                 android:text="@string/detect_face"
                 android:theme="@style/AppTheme.Button" />
         </LinearLayout>
