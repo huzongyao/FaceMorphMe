@@ -236,3 +236,21 @@ JNI_FUNC(nMorphToBitmap)(JNIEnv *env, jclass type, jobject src, jobject dst, job
     env->ReleaseIntArrayElements(indices_, indices, 0);
     return 0;
 }
+
+JNIEXPORT void JNICALL
+JNI_FUNC(bitmap2YUVI420Bytes)(JNIEnv *env, jclass type, jobject bitmap, jbyteArray outBytes_) {
+    AndroidBitmapInfo info;
+    void *data = lockAndroidBitmap(env, bitmap, info);
+    Mat input, output;
+    if (info.format == ANDROID_BITMAP_FORMAT_RGBA_8888) {
+        input = Mat(info.height, info.width, CV_8UC4, data);
+        cvtColor(input, output, CV_RGBA2YUV_I420);
+    } else if (info.format == ANDROID_BITMAP_FORMAT_RGB_565) {
+        input = Mat(info.height, info.width, CV_8UC2, data);
+        Mat rgba;
+        cvtColor(input, rgba, CV_BGR5652BGRA);
+        cvtColor(rgba, output, CV_RGBA2YUV_I420);
+    }
+    jsize outSize = jsize(info.height * info.width * 1.5);
+    env->SetByteArrayRegion(outBytes_, 0, outSize, (jbyte *) output.data);
+}

@@ -34,6 +34,7 @@ import com.hzy.face.morphme.widget.Ratio34ImageView;
 import com.hzy.face.morphme.widget.recycler.ItemClickListener;
 import com.hzy.face.morphme.widget.recycler.ItemTouchListener;
 import com.hzy.face.morphme.worker.MorphCallback;
+import com.hzy.face.morphme.worker.Mp4OutputWorker;
 import com.hzy.face.morphme.worker.MultiMorphWorker;
 import com.yalantis.ucrop.UCrop;
 
@@ -73,6 +74,8 @@ public class MorphVideoActivity extends AppCompatActivity {
     private MultiMorphWorker mMorphWorker;
     private int mTransFrameCount;
     private boolean mMorphSave;
+    private String mOutputPath;
+    private Mp4OutputWorker mVideoWorker;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -101,22 +104,36 @@ public class MorphVideoActivity extends AppCompatActivity {
         mMorphWorker.setCallback(new MorphCallback() {
             @Override
             protected void onStart() {
-
+                if (mMorphSave) {
+                    mOutputPath = SpaceUtils.newUsableFile().getPath() + ".mp4";
+                    mVideoWorker = new Mp4OutputWorker(mOutputPath);
+                    mVideoWorker.start(mOutputBitmap.getWidth(), mOutputBitmap.getHeight());
+                }
             }
 
             @Override
             protected void onOneFrame(Bitmap bitmap) {
+                if (mMorphSave) {
+                    mVideoWorker.queenFrame(bitmap);
+                    mVideoWorker.checkOutputBuffer();
+                }
                 runOnUiThread(() -> mDialogImageView.setImageBitmap(bitmap));
             }
 
             @Override
             protected void onAbort() {
-
+                if (mMorphSave) {
+                    mVideoWorker.checkOutputBuffer();
+                    mVideoWorker.release();
+                }
             }
 
             @Override
             protected void onFinish() {
-
+                if (mMorphSave) {
+                    mVideoWorker.checkOutputBuffer();
+                    mVideoWorker.release();
+                }
             }
         });
     }

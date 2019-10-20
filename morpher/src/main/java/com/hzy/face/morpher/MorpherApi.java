@@ -105,6 +105,14 @@ public class MorpherApi {
 
     public static native String getStasmVersionString();
 
+    /**
+     * convert bitmap to YUV_I420
+     *
+     * @param bitmap   bitmap
+     * @param outBytes YUV_I420
+     */
+    public static native void bitmap2YUVI420Bytes(Bitmap bitmap, byte[] outBytes);
+
     private static native int nMorphToBitmap(Bitmap src, Bitmap dst, Bitmap morph, float[] pSrc, float[] pDst, int[] indices, float alpha);
 
     /**

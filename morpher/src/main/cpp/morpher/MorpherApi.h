@@ -49,6 +49,9 @@ JNIEXPORT jint JNICALL
 JNI_FUNC(nMorphToBitmap)(JNIEnv *env, jclass type, jobject src, jobject dst, jobject morph,
                          jfloatArray pSrc_, jfloatArray pDst_, jintArray indices_, jfloat alpha);
 
+JNIEXPORT void JNICALL
+JNI_FUNC(bitmap2YUVI420Bytes)(JNIEnv *env, jclass type, jobject bitmap,jbyteArray outBytes_);
+
 #ifdef __cplusplus
 }
 #endif
