@@ -4,7 +4,7 @@ import android.os.Environment;
 
 import com.blankj.utilcode.util.FileUtils;
 import com.blankj.utilcode.util.Utils;
-import com.hzy.face.morphme.consts.AppConfigs;
+import com.hzy.face.morphme.consts.AppConst;
 
 import java.io.File;
 import java.util.UUID;
@@ -41,10 +41,10 @@ public class SpaceUtils {
         File fileDir = null;
         try {
             if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-                fileDir = Utils.getApp().getExternalFilesDir(AppConfigs.WORKSPACE_DIR);
+                fileDir = Utils.getApp().getExternalFilesDir(AppConst.WORKSPACE_DIR);
             }
             if (fileDir == null) {
-                fileDir = new File(Utils.getApp().getFilesDir(), AppConfigs.WORKSPACE_DIR);
+                fileDir = new File(Utils.getApp().getFilesDir(), AppConst.WORKSPACE_DIR);
             }
             if (!fileDir.exists()) {
                 fileDir.mkdirs();

@@ -8,6 +8,7 @@
 #include <venus/Feature.h>
 #include "MorphUtils.h"
 #include "Subdiv2DIndex.h"
+#include "ColorUtils.h"
 
 using namespace cv;
 using namespace venus;
@@ -238,19 +239,18 @@ JNI_FUNC(nMorphToBitmap)(JNIEnv *env, jclass type, jobject src, jobject dst, job
 }
 
 JNIEXPORT void JNICALL
-JNI_FUNC(bitmap2YUVI420Bytes)(JNIEnv *env, jclass type, jobject bitmap, jbyteArray outBytes_) {
+JNI_FUNC(bitmap2YUV)(JNIEnv *env, jclass type, jobject bitmap, jbyteArray yuv_, jint format) {
+    jbyte *yuv = env->GetByteArrayElements(yuv_, nullptr);
     AndroidBitmapInfo info;
     void *data = lockAndroidBitmap(env, bitmap, info);
-    Mat input, output;
-    if (info.format == ANDROID_BITMAP_FORMAT_RGBA_8888) {
-        input = Mat(info.height, info.width, CV_8UC4, data);
-        cvtColor(input, output, CV_RGBA2YUV_I420);
-    } else if (info.format == ANDROID_BITMAP_FORMAT_RGB_565) {
-        input = Mat(info.height, info.width, CV_8UC2, data);
-        Mat rgba;
-        cvtColor(input, rgba, CV_BGR5652BGRA);
-        cvtColor(rgba, output, CV_RGBA2YUV_I420);
+    if (data == nullptr) {
+        return;
     }
-    jsize outSize = jsize(info.height * info.width * 1.5);
-    env->SetByteArrayRegion(outBytes_, 0, outSize, (jbyte *) output.data);
+    if (info.format == ANDROID_BITMAP_FORMAT_RGBA_8888) {
+        ColorUtils::rgba2YUV((uint8_t *) data, (uint8_t *) yuv, info.width, info.height, format);
+    } else if (info.format == ANDROID_BITMAP_FORMAT_RGB_565) {
+
+    }
+    env->ReleaseByteArrayElements(yuv_, yuv, 0);
+    AndroidBitmap_unlockPixels(env, bitmap);
 }

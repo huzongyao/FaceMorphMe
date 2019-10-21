@@ -2,7 +2,7 @@ package com.hzy.face.morphme.utils;
 
 import com.blankj.utilcode.util.FileIOUtils;
 import com.blankj.utilcode.util.Utils;
-import com.hzy.face.morphme.consts.AppConfigs;
+import com.hzy.face.morphme.consts.AppConst;
 
 import java.io.File;
 import java.io.InputStream;
@@ -10,12 +10,12 @@ import java.io.InputStream;
 public class CascadeUtils {
 
     public static String getCascadePath() {
-        return new File(Utils.getApp().getFilesDir(), AppConfigs.CASCADE_DIR).getPath();
+        return new File(Utils.getApp().getFilesDir(), AppConst.CASCADE_DIR).getPath();
     }
 
     public static String getCascadeFacePath() {
         String dirPath = getCascadePath();
-        return new File(dirPath, AppConfigs.CASCADE_FACE_FILE).getPath();
+        return new File(dirPath, AppConst.CASCADE_FACE_FILE).getPath();
     }
 
     /**
@@ -25,8 +25,8 @@ public class CascadeUtils {
      */
     public static String ensureCascadePath() {
         try {
-            String[] fileNames = Utils.getApp().getAssets().list(AppConfigs.CASCADE_DIR);
-            File cascadeDir = new File(Utils.getApp().getFilesDir(), AppConfigs.CASCADE_DIR);
+            String[] fileNames = Utils.getApp().getAssets().list(AppConst.CASCADE_DIR);
+            File cascadeDir = new File(Utils.getApp().getFilesDir(), AppConst.CASCADE_DIR);
             if (!cascadeDir.exists()) {
                 cascadeDir.mkdirs();
             }
@@ -35,7 +35,7 @@ public class CascadeUtils {
                     File outFile = new File(cascadeDir, fileName);
                     if (!outFile.exists()) {
                         InputStream is = Utils.getApp().getAssets()
-                                .open(AppConfigs.CASCADE_DIR + File.separator + fileName);
+                                .open(AppConst.CASCADE_DIR + File.separator + fileName);
                         FileIOUtils.writeFileFromIS(outFile, is);
                     }
                 }

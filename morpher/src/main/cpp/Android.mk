@@ -51,9 +51,15 @@ VENUS_SOURCE := \
 	$(LOCAL_PATH)/venus/opencv_utility.cpp  \
 	$(LOCAL_PATH)/venus/Region.cpp          \
 
+LIBYUV_SOURCE := \
+    $(wildcard $(LOCAL_PATH)/libyuv/source/*.cc) \
+
 LOCAL_SRC_FILES += $(MORPHER_SOURCE)
 LOCAL_SRC_FILES += $(STASM_SOURCE)
 LOCAL_SRC_FILES += $(VENUS_SOURCE)
+LOCAL_SRC_FILES += $(LIBYUV_SOURCE)
+
+LOCAL_C_INCLUDES += $(LOCAL_PATH)/libyuv/include
 
 LOCAL_CXXFLAGS += -Wall -std=c++11 -frtti -fexceptions -ffunction-sections -fdata-sections
 LOCAL_LDFLAGS += -Wl,--gc-sections -llog -ljnigraphics
