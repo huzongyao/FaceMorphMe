@@ -162,7 +162,7 @@ public class MP4OutputWorker {
                 inputBuffer.put(mInputYUVData);
                 mMediaCodec.queueInputBuffer(inputBufferIndex,
                         0, mInputYUVData.length, mEncoderTimeUs, 0);
-                mEncoderTimeUs += 50_000;
+                mEncoderTimeUs += 80_000;
             }
         }
     }
@@ -176,6 +176,8 @@ public class MP4OutputWorker {
                 MediaFormat newFormat = mMediaCodec.getOutputFormat();
                 mVideoTrack = mMediaMuxer.addTrack(newFormat);
                 mMediaMuxer.start();
+            } else if (outputBufferIndex == MediaCodec.INFO_TRY_AGAIN_LATER) {
+                Log.i(TAG, "INFO_TRY_AGAIN_LATER");
             } else if (outputBufferIndex >= 0) {
                 if ((mBufferInfo.flags & MediaCodec.BUFFER_FLAG_CODEC_CONFIG) != 0) {
                     Log.i(TAG, "BUFFER_FLAG_CODEC_CONFIG");

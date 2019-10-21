@@ -62,6 +62,8 @@ LOCAL_SRC_FILES += $(LIBYUV_SOURCE)
 LOCAL_C_INCLUDES += $(LOCAL_PATH)/libyuv/include
 
 LOCAL_CXXFLAGS += -Wall -std=c++11 -frtti -fexceptions -ffunction-sections -fdata-sections
+LOCAL_CXXFLAGS += -DLIBYUV_NEON
 LOCAL_LDFLAGS += -Wl,--gc-sections -llog -ljnigraphics
+LOCAL_ARM_NEON  := true
 
 include $(BUILD_SHARED_LIBRARY)
