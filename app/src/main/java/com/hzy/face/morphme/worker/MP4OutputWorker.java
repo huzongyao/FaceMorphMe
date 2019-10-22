@@ -59,7 +59,6 @@ public class MP4OutputWorker {
         }
     }
 
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
     private void setupMediaCodec() {
         try {
             selectMediaCodecInfo();
@@ -77,7 +76,7 @@ public class MP4OutputWorker {
                 }
                 mMediaFormat.setInteger(MediaFormat.KEY_I_FRAME_INTERVAL, I_FRAME_INTERVAL);
                 mMediaFormat.setInteger(MediaFormat.KEY_COLOR_FORMAT, mColorFormat);
-                Log.i(TAG, "Input COLOR_FORMAT[" + mColorFormat + ']');
+                LogUtils.i("Input COLOR_FORMAT: [" + mColorFormat + ']');
                 mMediaCodec.configure(mMediaFormat, null, null,
                         MediaCodec.CONFIGURE_FLAG_ENCODE);
             }
@@ -167,7 +166,7 @@ public class MP4OutputWorker {
         }
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
     public void checkOutputBuffer() {
         int outputBufferIndex = mMediaCodec.dequeueOutputBuffer(mBufferInfo, mDequeueTimeoutUS);
         do {
@@ -182,7 +181,12 @@ public class MP4OutputWorker {
                 if ((mBufferInfo.flags & MediaCodec.BUFFER_FLAG_CODEC_CONFIG) != 0) {
                     Log.i(TAG, "BUFFER_FLAG_CODEC_CONFIG");
                 } else {
-                    ByteBuffer outputBuffer = mMediaCodec.getOutputBuffer(outputBufferIndex);
+                    ByteBuffer outputBuffer;
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                        outputBuffer = mMediaCodec.getOutputBuffer(outputBufferIndex);
+                    } else {
+                        outputBuffer = mMediaCodec.getOutputBuffers()[outputBufferIndex];
+                    }
                     if (outputBuffer != null) {
                         Log.i(TAG, "DATA Frame: " + mBufferInfo.size);
                         outputBuffer.position(mBufferInfo.offset);

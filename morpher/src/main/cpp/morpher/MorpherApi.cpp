@@ -247,7 +247,7 @@ JNI_FUNC(bitmap2YUV)(JNIEnv *env, jclass type, jobject bitmap, jbyteArray yuv_, 
         return;
     }
     if (info.format == ANDROID_BITMAP_FORMAT_RGBA_8888) {
-        ColorUtils::rgba2YUV((uint8_t *) data, (uint8_t *) yuv, info.width, info.height, format);
+        ColorUtils::rgba2YUV420((uint8_t *) data, (uint8_t *) yuv, info.width, info.height, format);
     } else if (info.format == ANDROID_BITMAP_FORMAT_RGB_565) {
 
     }

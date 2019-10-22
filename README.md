@@ -90,6 +90,26 @@ void warpAffine( InputArray src, OutputArray dst,
                   const Scalar& borderValue = Scalar());
 ```
 
+4. GIF动图编码
+* 使用了开源库[BurstLinker](https://github.com/bilibili/BurstLinker)从Bitmap生成GIF文件
+```
+burstLinker.init(width, height, filePath);
+burstLinker.connect(colorBitmap, BurstLinker.OCTREE_QUANTIZER, BurstLinker.NO_DITHER, 0, 0, delayMs);
+burstLinker.release();
+```
+
+5. MP4视频编码
+* 使用Android统一的MediaCodec硬件编码接口(Android 4.1 (API16) 开始支持)
+
+* 压缩编码格式根据硬件能力依次选择: H.265(HEVC)，H.264(AVC)，MPEG4，H.263
+
+* 编码色彩空间目前支持了YUV420的四种形式：I420， NV12， YV12， NV21。
+  很多设备的编码器都支持了YUV420中的一种，YUV420图像所占空间大小为像素的1.5倍，
+  如果扩展其他格式的色彩空间可能需要给编码器输入不同大小的数据。
+  其中使用了开源库libyuv对RGBA到YUV的转换，libyuv支持cpu硬件加速，比OpenCV或自己写的转换算法运算速度快。
+
+* 使用Android统一的MediaMuxer混频封装接口(Android 4.3 (API18) 开始支持)，输出为MP4格式文件。
+
 #### Reference
 1. https://www.learnopencv.com/face-morph-using-opencv-cpp-python/
 2. https://github.com/Yalantis/uCrop

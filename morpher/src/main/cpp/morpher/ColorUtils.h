@@ -15,7 +15,7 @@ public:
     static const int TYPE_YV12 = 20;
     static const int TYPE_NV21 = 39;
 
-    static void rgba2YUV(uint8_t *rgba, uint8_t *yuv, int width, int height, int type);
+    static void rgba2YUV420(uint8_t *rgba, uint8_t *yuv, int width, int height, int type);
 };
 
 
