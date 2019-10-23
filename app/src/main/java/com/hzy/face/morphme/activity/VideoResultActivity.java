@@ -1,20 +1,27 @@
 package com.hzy.face.morphme.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.blankj.utilcode.util.StringUtils;
+import com.blankj.utilcode.util.UriUtils;
 import com.devbrackets.android.exomedia.ui.widget.VideoView;
 import com.google.android.exoplayer2.Player;
 import com.hzy.face.morphme.R;
 import com.hzy.face.morphme.consts.RouterHub;
 
+import java.io.File;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 @Route(path = RouterHub.VIDEO_RESULT_ACTIVITY)
 public class VideoResultActivity extends AppCompatActivity {
@@ -57,5 +64,21 @@ public class VideoResultActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @OnClick({R.id.save_button, R.id.share_button})
+    public void onButtonsClicked(View view) {
+        switch (view.getId()) {
+            case R.id.save_button:
+                break;
+            case R.id.share_button:
+                if (!StringUtils.isTrimEmpty(mFilePath)) {
+                    Intent intent = new Intent(Intent.ACTION_SEND);
+                    intent.putExtra(Intent.EXTRA_STREAM, UriUtils.file2Uri(new File(mFilePath)));
+                    intent.setType("video/*");
+                    startActivity(Intent.createChooser(intent, getString(R.string.share_to)));
+                }
+                break;
+        }
     }
 }

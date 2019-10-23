@@ -39,6 +39,7 @@ public class MP4OutputWorker implements Runnable {
     private String mMediaMimeType;
     private int mColorFormat;
     private volatile boolean mMuxerRunning;
+    private EncoderCallback mEncoderCallback;
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
     public MP4OutputWorker(String filePath, int width, int height) {
@@ -56,12 +57,16 @@ public class MP4OutputWorker implements Runnable {
         }
     }
 
+    public void setCallback(EncoderCallback callback) {
+        mEncoderCallback = callback;
+    }
+
     public void start() {
         try {
             mEncoderTimeUs = 0;
             mMediaCodec.start();
             mMuxerRunning = true;
-            new Thread(this).start(); // listen thread
+            new Thread(this).start();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -80,6 +85,9 @@ public class MP4OutputWorker implements Runnable {
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
     @Override
     public void run() {
+        if (mEncoderCallback != null) {
+            mEncoderCallback.onStart();
+        }
         while (mMuxerRunning) {
             try {
                 Thread.sleep(500);
@@ -128,6 +136,9 @@ public class MP4OutputWorker implements Runnable {
             mMediaCodec.release();
         } catch (Exception e) {
             e.printStackTrace();
+        }
+        if (mEncoderCallback != null) {
+            mEncoderCallback.onFinish();
         }
     }
 

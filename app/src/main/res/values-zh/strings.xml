@@ -14,7 +14,7 @@
     <string name="no_face_detected">没有检测到人脸!</string>
     <string name="choose_images_first">请先选择图片!</string>
     <string name="loading_wait_tips">正在加载，请稍后。。。</string>
-    <string name="save_gif">保存Gif</string>
+    <string name="save_gif">保存GIF</string>
     <string name="share_to">分享到</string>
     <string name="loading">加载中…</string>
     <string name="alpha_format_text">Alpha: %.4f</string>
@@ -39,5 +39,7 @@
     <string name="select_2images_tips">需要至少选择两张以上照片!</string>
     <string name="video_output_settings">视频输出配置</string>
     <string name="image_long_touch_tips">长按可以删除或者调整图片顺序!</string>
-    <string name="result_video">Result Video</string>
+    <string name="result_video">生成的视频</string>
+    <string name="save_image">保存图片</string>
+    <string name="share_video">分享视频</string>
 </resources>

@@ -27,12 +27,28 @@
                 app:useDefaultControls="true" />
         </FrameLayout>
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/share_button"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="260dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="@string/share_image"
-            android:theme="@style/AppTheme.Button" />
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/save_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/save_video"
+                android:theme="@style/AppTheme.Button" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/share_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:text="@string/share_video"
+                android:theme="@style/AppTheme.Button" />
+        </LinearLayout>
     </LinearLayout>
 </ScrollView>

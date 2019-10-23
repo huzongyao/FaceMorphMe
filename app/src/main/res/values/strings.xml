@@ -53,4 +53,6 @@
     <string name="video_output_settings">Video Output Settings</string>
     <string name="image_long_touch_tips">Long Click To Delete Or Reorder!</string>
     <string name="result_video">Result Video</string>
+    <string name="save_image">Save Image</string>
+    <string name="share_video">Share Video</string>
 </resources>

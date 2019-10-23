@@ -3,6 +3,7 @@ package com.hzy.face.morphme.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
@@ -27,7 +28,7 @@ public class GifResultActivity extends AppCompatActivity {
     @BindView(R.id.gif_image_view)
     Ratio34ImageView mGifImageView;
 
-    private String mGifFilePath;
+    private String mFilePath;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -39,8 +40,8 @@ public class GifResultActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
         try {
-            mGifFilePath = getIntent().getStringExtra(EXTRA_FILE_PATH);
-            Glide.with(this).load(mGifFilePath).into(mGifImageView);
+            mFilePath = getIntent().getStringExtra(EXTRA_FILE_PATH);
+            Glide.with(this).load(mFilePath).into(mGifImageView);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -57,11 +58,17 @@ public class GifResultActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @OnClick(R.id.share_button)
-    public void onShareClicked() {
-        if (!StringUtils.isTrimEmpty(mGifFilePath)) {
-            Intent intent = IntentUtils.getShareImageIntent("", mGifFilePath);
-            startActivity(Intent.createChooser(intent, getString(R.string.share_to)));
+    @OnClick({R.id.save_button, R.id.share_button})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.save_button:
+                break;
+            case R.id.share_button:
+                if (!StringUtils.isTrimEmpty(mFilePath)) {
+                    Intent intent = IntentUtils.getShareImageIntent("", mFilePath);
+                    startActivity(Intent.createChooser(intent, getString(R.string.share_to)));
+                }
+                break;
         }
     }
 }

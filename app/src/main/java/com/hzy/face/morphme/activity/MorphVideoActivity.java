@@ -35,6 +35,7 @@ import com.hzy.face.morphme.utils.SpaceUtils;
 import com.hzy.face.morphme.widget.Ratio34ImageView;
 import com.hzy.face.morphme.widget.recycler.ItemClickListener;
 import com.hzy.face.morphme.widget.recycler.ItemTouchListener;
+import com.hzy.face.morphme.worker.EncoderCallback;
 import com.hzy.face.morphme.worker.MP4OutputWorker;
 import com.hzy.face.morphme.worker.MorphCallback;
 import com.hzy.face.morphme.worker.MultiMorphWorker;
@@ -107,9 +108,7 @@ public class MorphVideoActivity extends AppCompatActivity {
             @Override
             protected void onStart() {
                 if (mMorphSave) {
-                    mOutputPath = SpaceUtils.newUsableFile().getPath();
-                    mVideoWorker = new MP4OutputWorker(mOutputPath, mImageSize.x, mImageSize.y);
-                    mVideoWorker.start();
+                    startVideoSaver();
                 }
             }
 
@@ -132,13 +131,28 @@ public class MorphVideoActivity extends AppCompatActivity {
             protected void onFinish() {
                 if (mMorphSave) {
                     mVideoWorker.release();
-                    mDeleteArea.postDelayed(() -> {
-                        mImageDialog.dismiss();
-                        routerShareVideoPage();
-                    }, 2000);
                 }
             }
         });
+    }
+
+    private void startVideoSaver() {
+        mOutputPath = SpaceUtils.newUsableFile().getPath();
+        mVideoWorker = new MP4OutputWorker(mOutputPath, mImageSize.x, mImageSize.y);
+        mVideoWorker.setCallback(new EncoderCallback() {
+            @Override
+            public void onStart() {
+            }
+
+            @Override
+            public void onFinish() {
+                mDeleteArea.postDelayed(() -> {
+                    mImageDialog.dismiss();
+                    routerShareVideoPage();
+                }, 300);
+            }
+        });
+        mVideoWorker.start();
     }
 
     private void setupUILayout() {
