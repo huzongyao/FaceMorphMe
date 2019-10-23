@@ -18,7 +18,9 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.blankj.utilcode.util.SnackbarUtils;
+import com.blankj.utilcode.util.StringUtils;
 import com.bumptech.glide.Glide;
 import com.hzy.face.morphme.R;
 import com.hzy.face.morphme.adapter.ImageGridAdapter;
@@ -33,8 +35,8 @@ import com.hzy.face.morphme.utils.SpaceUtils;
 import com.hzy.face.morphme.widget.Ratio34ImageView;
 import com.hzy.face.morphme.widget.recycler.ItemClickListener;
 import com.hzy.face.morphme.widget.recycler.ItemTouchListener;
-import com.hzy.face.morphme.worker.MorphCallback;
 import com.hzy.face.morphme.worker.MP4OutputWorker;
+import com.hzy.face.morphme.worker.MorphCallback;
 import com.hzy.face.morphme.worker.MultiMorphWorker;
 import com.yalantis.ucrop.UCrop;
 
@@ -105,7 +107,7 @@ public class MorphVideoActivity extends AppCompatActivity {
             @Override
             protected void onStart() {
                 if (mMorphSave) {
-                    mOutputPath = SpaceUtils.newUsableFile().getPath() + ".mp4";
+                    mOutputPath = SpaceUtils.newUsableFile().getPath();
                     mVideoWorker = new MP4OutputWorker(mOutputPath, mImageSize.x, mImageSize.y);
                     mVideoWorker.start();
                 }
@@ -115,7 +117,6 @@ public class MorphVideoActivity extends AppCompatActivity {
             protected void onOneFrame(Bitmap bitmap) {
                 if (mMorphSave) {
                     mVideoWorker.queenFrame(bitmap);
-                    mVideoWorker.checkOutputBuffer();
                 }
                 runOnUiThread(() -> mDialogImageView.setImageBitmap(bitmap));
             }
@@ -123,7 +124,6 @@ public class MorphVideoActivity extends AppCompatActivity {
             @Override
             protected void onAbort() {
                 if (mMorphSave) {
-                    mVideoWorker.checkOutputBuffer();
                     mVideoWorker.release();
                 }
             }
@@ -131,8 +131,11 @@ public class MorphVideoActivity extends AppCompatActivity {
             @Override
             protected void onFinish() {
                 if (mMorphSave) {
-                    mVideoWorker.checkOutputBuffer();
                     mVideoWorker.release();
+                    mDeleteArea.postDelayed(() -> {
+                        mImageDialog.dismiss();
+                        routerShareVideoPage();
+                    }, 2000);
                 }
             }
         });
@@ -176,6 +179,14 @@ public class MorphVideoActivity extends AppCompatActivity {
                     mMorphWorker.abort();
                     mImageDialog.dismiss();
                 });
+    }
+
+    private void routerShareVideoPage() {
+        if (!StringUtils.isTrimEmpty(mOutputPath)) {
+            ARouter.getInstance().build(RouterHub.VIDEO_RESULT_ACTIVITY)
+                    .withString(VideoResultActivity.EXTRA_FILE_PATH, mOutputPath)
+                    .navigation(this);
+        }
     }
 
     @Override

@@ -39,4 +39,5 @@
     <string name="select_2images_tips">需要至少选择两张以上照片!</string>
     <string name="video_output_settings">视频输出配置</string>
     <string name="image_long_touch_tips">长按可以删除或者调整图片顺序!</string>
+    <string name="result_video">Result Video</string>
 </resources>

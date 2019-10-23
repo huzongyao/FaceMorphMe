@@ -14,9 +14,10 @@ import com.blankj.utilcode.util.LogUtils;
 import com.hzy.face.morpher.MorpherApi;
 import com.hzy.face.morphme.consts.VideoConst;
 
+import java.io.IOException;
 import java.nio.ByteBuffer;
 
-public class MP4OutputWorker {
+public class MP4OutputWorker implements Runnable {
     private static final String TAG = MP4OutputWorker.class.getSimpleName();
 
     private static final int FRAME_RATE = 15;
@@ -37,25 +38,117 @@ public class MP4OutputWorker {
     private MediaCodecInfo mMediaCodecInfo;
     private String mMediaMimeType;
     private int mColorFormat;
+    private volatile boolean mMuxerRunning;
 
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
     public MP4OutputWorker(String filePath, int width, int height) {
         mOutputVideoPath = filePath;
         mVideoWidth = width;
         mVideoHeight = height;
         mBufferInfo = new MediaCodec.BufferInfo();
+        mInputYUVData = new byte[width * height * 3 / 2];
         setupMediaCodec();
-    }
-
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
-    public void start() {
         try {
             mMediaMuxer = new MediaMuxer(mOutputVideoPath,
                     MediaMuxer.OutputFormat.MUXER_OUTPUT_MPEG_4);
-            mInputYUVData = new byte[mVideoWidth * mVideoHeight * 3 / 2];
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void start() {
+        try {
             mEncoderTimeUs = 0;
             mMediaCodec.start();
+            mMuxerRunning = true;
+            new Thread(this).start(); // listen thread
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
+    public void release() {
+        try {
+            mMediaCodec.flush();
+            mMuxerRunning = false;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
+    @Override
+    public void run() {
+        while (mMuxerRunning) {
+            try {
+                Thread.sleep(500);
+                int outputBufferIndex = mMediaCodec.dequeueOutputBuffer(mBufferInfo, mDequeueTimeoutUS);
+                do {
+                    if (outputBufferIndex == MediaCodec.INFO_OUTPUT_FORMAT_CHANGED) {
+                        Log.i(TAG, "INFO_OUTPUT_FORMAT_CHANGED");
+                        MediaFormat newFormat = mMediaCodec.getOutputFormat();
+                        mVideoTrack = mMediaMuxer.addTrack(newFormat);
+                        mMediaMuxer.start();
+                    } else if (outputBufferIndex == MediaCodec.INFO_TRY_AGAIN_LATER) {
+                        Log.i(TAG, "INFO_TRY_AGAIN_LATER");
+                    } else if (outputBufferIndex >= 0) {
+                        if ((mBufferInfo.flags & MediaCodec.BUFFER_FLAG_CODEC_CONFIG) != 0) {
+                            Log.i(TAG, "BUFFER_FLAG_CODEC_CONFIG");
+                        } else {
+                            ByteBuffer outputBuffer;
+                            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                                outputBuffer = mMediaCodec.getOutputBuffer(outputBufferIndex);
+                            } else {
+                                outputBuffer = mMediaCodec.getOutputBuffers()[outputBufferIndex];
+                            }
+                            if (outputBuffer != null) {
+                                Log.i(TAG, "DATA Frame: " + mBufferInfo.size);
+                                outputBuffer.position(mBufferInfo.offset);
+                                outputBuffer.limit(mBufferInfo.offset + mBufferInfo.size);
+                                mMediaMuxer.writeSampleData(mVideoTrack, outputBuffer, mBufferInfo);
+                                mMediaCodec.releaseOutputBuffer(outputBufferIndex, false);
+                            }
+                        }
+                    }
+                    if (mMuxerRunning) {
+                        outputBufferIndex = mMediaCodec.dequeueOutputBuffer(mBufferInfo, mDequeueTimeoutUS);
+                    } else {
+                        break;
+                    }
+                } while (outputBufferIndex > 0);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        try {
+            mMediaCodec.stop();
+            mMediaMuxer.stop();
+            mMediaMuxer.release();
+            mMediaCodec.release();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public void queenFrame(Bitmap bitmap) {
+        int inputBufferIndex = mMediaCodec.dequeueInputBuffer(mDequeueTimeoutUS);
+        if (inputBufferIndex >= 0) {
+            ByteBuffer inputBuffer;
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                inputBuffer = mMediaCodec.getInputBuffer(inputBufferIndex);
+            } else {
+                inputBuffer = mMediaCodec.getInputBuffers()[inputBufferIndex];
+            }
+            if (inputBuffer != null) {
+                inputBuffer.clear();
+                MorpherApi.bitmap2YUV(bitmap, mInputYUVData, mColorFormat);
+                inputBuffer.put(mInputYUVData);
+                mMediaCodec.queueInputBuffer(inputBufferIndex,
+                        0, mInputYUVData.length, mEncoderTimeUs, 0);
+                mEncoderTimeUs += 80_000;
+            }
         }
     }
 
@@ -132,71 +225,5 @@ public class MP4OutputWorker {
         } else {
             LogUtils.e("No Good MediaCodec Found!!");
         }
-    }
-
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
-    public void release() {
-        try {
-            mMediaCodec.stop();
-            mMediaCodec.release();
-            mMediaMuxer.stop();
-            mMediaMuxer.release();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void queenFrame(Bitmap bitmap) {
-        int inputBufferIndex = mMediaCodec.dequeueInputBuffer(mDequeueTimeoutUS);
-        if (inputBufferIndex >= 0) {
-            ByteBuffer inputBuffer;
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-                inputBuffer = mMediaCodec.getInputBuffer(inputBufferIndex);
-            } else {
-                inputBuffer = mMediaCodec.getInputBuffers()[inputBufferIndex];
-            }
-            if (inputBuffer != null) {
-                inputBuffer.clear();
-                MorpherApi.bitmap2YUV(bitmap, mInputYUVData, mColorFormat);
-                inputBuffer.put(mInputYUVData);
-                mMediaCodec.queueInputBuffer(inputBufferIndex,
-                        0, mInputYUVData.length, mEncoderTimeUs, 0);
-                mEncoderTimeUs += 80_000;
-            }
-        }
-    }
-
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
-    public void checkOutputBuffer() {
-        int outputBufferIndex = mMediaCodec.dequeueOutputBuffer(mBufferInfo, mDequeueTimeoutUS);
-        do {
-            if (outputBufferIndex == MediaCodec.INFO_OUTPUT_FORMAT_CHANGED) {
-                Log.i(TAG, "INFO_OUTPUT_FORMAT_CHANGED");
-                MediaFormat newFormat = mMediaCodec.getOutputFormat();
-                mVideoTrack = mMediaMuxer.addTrack(newFormat);
-                mMediaMuxer.start();
-            } else if (outputBufferIndex == MediaCodec.INFO_TRY_AGAIN_LATER) {
-                Log.i(TAG, "INFO_TRY_AGAIN_LATER");
-            } else if (outputBufferIndex >= 0) {
-                if ((mBufferInfo.flags & MediaCodec.BUFFER_FLAG_CODEC_CONFIG) != 0) {
-                    Log.i(TAG, "BUFFER_FLAG_CODEC_CONFIG");
-                } else {
-                    ByteBuffer outputBuffer;
-                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-                        outputBuffer = mMediaCodec.getOutputBuffer(outputBufferIndex);
-                    } else {
-                        outputBuffer = mMediaCodec.getOutputBuffers()[outputBufferIndex];
-                    }
-                    if (outputBuffer != null) {
-                        Log.i(TAG, "DATA Frame: " + mBufferInfo.size);
-                        outputBuffer.position(mBufferInfo.offset);
-                        outputBuffer.limit(mBufferInfo.offset + mBufferInfo.size);
-                        mMediaMuxer.writeSampleData(mVideoTrack, outputBuffer, mBufferInfo);
-                        mMediaCodec.releaseOutputBuffer(outputBufferIndex, false);
-                    }
-                }
-            }
-            outputBufferIndex = mMediaCodec.dequeueOutputBuffer(mBufferInfo, mDequeueTimeoutUS);
-        } while (outputBufferIndex > 0);
     }
 }

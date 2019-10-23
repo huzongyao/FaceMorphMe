@@ -52,4 +52,5 @@
     <string name="select_2images_tips">Please Select At Least 2 Images!</string>
     <string name="video_output_settings">Video Output Settings</string>
     <string name="image_long_touch_tips">Long Click To Delete Or Reorder!</string>
+    <string name="result_video">Result Video</string>
 </resources>
