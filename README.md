@@ -108,6 +108,8 @@ burstLinker.release();
   如果扩展其他格式的色彩空间可能需要给编码器输入不同大小的数据。
   其中使用了开源库libyuv对RGBA到YUV的转换，libyuv支持cpu硬件加速，比OpenCV或自己写的转换算法运算速度快。
 
+* 测试中发现某些编码器接收的分辨率必须是16的整数倍，所以干脆把设置里的分辨率选项都设置为16的整倍数。
+
 * 使用Android统一的MediaMuxer混频封装接口(Android 4.3 (API18) 开始支持)，输出为MP4格式文件。
 
 #### Reference

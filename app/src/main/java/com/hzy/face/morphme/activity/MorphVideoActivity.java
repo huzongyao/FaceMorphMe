@@ -158,7 +158,7 @@ public class MorphVideoActivity extends AppCompatActivity {
                 mDeleteArea.postDelayed(() -> {
                     mImageDialog.dismiss();
                     routerShareVideoPage();
-                }, 300);
+                }, 800);
             }
         });
         mVideoWorker.start();
