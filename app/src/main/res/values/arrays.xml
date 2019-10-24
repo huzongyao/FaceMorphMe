@@ -14,7 +14,6 @@
         <item>480x640</item>
         <item>576x768</item>
         <item>720x960</item>
-        <item>720x960</item>
         <item>768x1024</item>
         <item>960x1280</item>
         <item>1200x1600</item>
@@ -28,6 +27,9 @@
         <item>5</item>
         <item>6</item>
         <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
     </string-array>
     <string-array name="pref_frames_array">
         <item>5</item>
