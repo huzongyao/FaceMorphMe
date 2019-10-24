@@ -46,7 +46,7 @@
             android:background="#dddddd" />
 
         <LinearLayout
-            android:id="@+id/source_code_item"
+            android:id="@+id/btn_open_3rd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?android:attr/selectableItemBackground"
@@ -58,18 +58,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
-                android:text="@string/source_code"
+                android:text="@string/rd3_open_source_libs"
                 android:textColor="#333333"
-                android:textSize="16sp" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="right"
-                android:singleLine="true"
-                android:text="@string/app_source_code"
-                android:textColor="#666666"
                 android:textSize="16sp" />
         </LinearLayout>
 

@@ -23,6 +23,11 @@ JNI_FUNC(getStasmVersionString)(JNIEnv *env, jclass type) {
     return env->NewStringUTF(stasm_VERSION);
 }
 
+JNIEXPORT jstring JNICALL
+JNI_FUNC(getLibYUVVersionString)(JNIEnv *env, jclass type) {
+    return env->NewStringUTF(CVAUX_STR(LIBYUV_VERSION));
+}
+
 JNIEXPORT jfloatArray JNICALL
 JNI_FUNC(nDetectFaceRect)(JNIEnv *env, jclass type, jobject bitmap, jstring classifierPath_) {
     const char *classifierPath = env->GetStringUTFChars(classifierPath_, nullptr);

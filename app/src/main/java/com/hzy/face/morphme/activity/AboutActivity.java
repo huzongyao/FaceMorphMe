@@ -53,15 +53,15 @@ public class AboutActivity extends AppCompatActivity {
     }
 
     @OnClick({R.id.version_info_item,
-            R.id.source_code_item,
+            R.id.btn_open_3rd,
             R.id.about_me_item})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.version_info_item:
-                ARouter.getInstance().build(RouterHub.VERSION_INFO_ACTIVITY).navigation();
+                WebViewActivity.startUrl(getString(R.string.github_project_release));
                 break;
-            case R.id.source_code_item:
-                WebViewActivity.startUrl(getString(R.string.github_project_page));
+            case R.id.btn_open_3rd:
+                ARouter.getInstance().build(RouterHub.VERSION_INFO_ACTIVITY).navigation();
                 break;
             case R.id.about_me_item:
                 WebViewActivity.startUrl(getString(R.string.github_user_page));

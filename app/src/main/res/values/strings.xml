@@ -1,21 +1,22 @@
 <resources>
     <string name="pref_resolution_key" translatable="false">pref_resolution_key</string>
     <string name="pref_frames_key" translatable="false">pref_frames_key</string>
-    <string name="pref_gif_delay_key" translatable="false">pref_gif_delay_key</string>
+    <string name="pref_trans_delay_key" translatable="false">pref_trans_delay_key</string>
     <string name="pref_ditherer_key" translatable="false">pref_ditherer_key</string>
     <string name="pref_quantizer_key" translatable="false">pref_quantizer_key</string>
-    <string name="pref_video_delay_key" translatable="false">pref_video_delay_key</string>
 
     <string name="app_source_code" translatable="false">FaceMorphMe</string>
     <string name="github_project_page" translatable="false">https://github.com/huzongyao/FaceMorphMe</string>
-    <string name="github_user_page" translatable="false">https://huzongyao.github.io</string>
+    <string name="github_project_release" translatable="false">https://github.com/huzongyao/FaceMorphMe/releases/latest</string>
+    <string name="github_user_page" translatable="false">https://github.com/huzongyao</string>
     <string name="opencv_intro" translatable="false">OpenCV (Open Source Computer Vision Library) is an open source computer vision and machine learning software library. OpenCV was built to provide a common infrastructure for computer vision applications and to accelerate the use of machine perception in the commercial products. Being a BSD-licensed product, OpenCV makes it easy for businesses to utilize and modify the code.</string>
     <string name="stasm_intro" translatable="false">Stasm is a C++ software library for finding features in faces. You give it an image of a face and it returns the positions of the facial features. Stasm is based on the Active Shape Model of Tim Cootes and his colleagues. Stasm is designed to work on front views of faces with neutral expressions. It performed very well in an independent 2013 comparative study. Source code is provided under a BSD style license. OpenCV is required.</string>
+    <string name="libyuv_intro" translatable="false">libyuv is an open source project that includes YUV scaling and conversion functionality.</string>
 
     <string name="app_name">MorphMe</string>
     <string name="menu_about">About</string>
     <string name="version_info">Version Info</string>
-    <string name="source_code">Source Code:</string>
+    <string name="source_code">Source Code</string>
     <string name="my_github">My GitHub</string>
     <string name="about">About</string>
     <string name="web_view_refresh">Refresh</string>
@@ -50,9 +51,12 @@
     <string name="save_video">Save Video</string>
     <string name="cancel">Cancel</string>
     <string name="select_2images_tips">Please Select At Least 2 Images!</string>
-    <string name="video_output_settings">Video Output Settings</string>
     <string name="image_long_touch_tips">Long Click To Delete Or Reorder!</string>
     <string name="result_video">Result Video</string>
     <string name="save_image">Save Image</string>
     <string name="share_video">Share Video</string>
+    <string name="file_saved_already">File is Saved Already!!</string>
+    <string name="open_in_browser">Open In Browser</string>
+    <string name="exit">Exit</string>
+    <string name="rd3_open_source_libs">3rd Open Source Library</string>
 </resources>

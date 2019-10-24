@@ -7,7 +7,7 @@ public abstract class MorphCallback {
     protected void onStart() {
     }
 
-    protected abstract void onOneFrame(Bitmap bitmap);
+    protected abstract void onOneFrame(Bitmap bitmap, int index, float alpha);
 
     protected void onAbort() {
     }

@@ -114,6 +114,7 @@ burstLinker.release();
 1. https://www.learnopencv.com/face-morph-using-opencv-cpp-python/
 2. https://github.com/Yalantis/uCrop
 3. https://github.com/bilibili/BurstLinker
+4. https://github.com/brianwernick/ExoMedia
 
 ### About Me
  * GitHub: [https://huzongyao.github.io/](https://huzongyao.github.io/)

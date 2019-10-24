@@ -23,6 +23,7 @@ public class MP4OutputWorker implements Runnable {
     private static final int FRAME_RATE = 15;
     private static final int COMPRESS_RATIO = 64;
     private static final int I_FRAME_INTERVAL = 5;
+    private static final int CHECK_OUTPUT_DELAY = 100;
     private final int mVideoWidth;
     private final int mVideoHeight;
 
@@ -90,7 +91,7 @@ public class MP4OutputWorker implements Runnable {
         }
         while (mMuxerRunning) {
             try {
-                Thread.sleep(500);
+                Thread.sleep(CHECK_OUTPUT_DELAY);
                 int outputBufferIndex = mMediaCodec.dequeueOutputBuffer(mBufferInfo, mDequeueTimeoutUS);
                 do {
                     if (outputBufferIndex == MediaCodec.INFO_OUTPUT_FORMAT_CHANGED) {
@@ -143,7 +144,7 @@ public class MP4OutputWorker implements Runnable {
     }
 
 
-    public void queenFrame(Bitmap bitmap) {
+    public void queenFrame(Bitmap bitmap, long delayUs) {
         int inputBufferIndex = mMediaCodec.dequeueInputBuffer(mDequeueTimeoutUS);
         if (inputBufferIndex >= 0) {
             ByteBuffer inputBuffer;
@@ -158,7 +159,7 @@ public class MP4OutputWorker implements Runnable {
                 inputBuffer.put(mInputYUVData);
                 mMediaCodec.queueInputBuffer(inputBufferIndex,
                         0, mInputYUVData.length, mEncoderTimeUs, 0);
-                mEncoderTimeUs += 80_000;
+                mEncoderTimeUs += delayUs;
             }
         }
     }

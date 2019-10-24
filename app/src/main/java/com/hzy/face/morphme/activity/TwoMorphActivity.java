@@ -60,7 +60,7 @@ public class TwoMorphActivity extends AppCompatActivity {
     private String mGifFilePath;
     private Point mImageSize;
     private float mFrameSpace;
-    private int mFrameDuration;
+    private int mFrameDelayMs;
     private int mGifQuantizer;
     private int mGifDitherer;
     private ExecutorService mFaceExecutor;
@@ -101,8 +101,8 @@ public class TwoMorphActivity extends AppCompatActivity {
         mImageSize = ConfigUtils.getConfigResolution();
         int frames = ConfigUtils.getConfigFrameCount();
         mFrameSpace = (frames > 0) ? (1f / frames) : 0.1f;
-        int duration = ConfigUtils.getConfigGifDuration();
-        mFrameDuration = duration / frames;
+        int duration = ConfigUtils.getConfigTransDuration();
+        mFrameDelayMs = duration / frames;
         mGifQuantizer = ConfigUtils.getConfigGifQuantizer();
         mGifDitherer = ConfigUtils.getConfigGifDitherer();
     }
@@ -245,7 +245,7 @@ public class TwoMorphActivity extends AppCompatActivity {
                 });
                 if (needSave) {
                     mBurstLinker.connect(mOutputBitmap, mGifQuantizer,
-                            mGifDitherer, 0, 0, mFrameDuration);
+                            mGifDitherer, 0, 0, mFrameDelayMs);
                 }
                 mMorphAlpha += mFrameSpace;
                 if (mMorphAlpha > 1) {

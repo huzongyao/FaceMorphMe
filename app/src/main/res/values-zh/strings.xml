@@ -2,7 +2,7 @@
     <string name="app_name">MorphMe</string>
     <string name="menu_about">关于</string>
     <string name="version_info">版本信息</string>
-    <string name="source_code">源代码:</string>
+    <string name="source_code">源代码</string>
     <string name="my_github">我的GitHub</string>
     <string name="about">关于</string>
     <string name="web_view_refresh">刷新</string>
@@ -37,9 +37,12 @@
     <string name="save_video">保存视频</string>
     <string name="cancel">取消</string>
     <string name="select_2images_tips">需要至少选择两张以上照片!</string>
-    <string name="video_output_settings">视频输出配置</string>
     <string name="image_long_touch_tips">长按可以删除或者调整图片顺序!</string>
     <string name="result_video">生成的视频</string>
     <string name="save_image">保存图片</string>
     <string name="share_video">分享视频</string>
+    <string name="file_saved_already">文件已经存在!!</string>
+    <string name="open_in_browser">用浏览器打开</string>
+    <string name="exit">退出</string>
+    <string name="rd3_open_source_libs">第三方开源库</string>
 </resources>

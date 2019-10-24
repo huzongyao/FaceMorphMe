@@ -30,22 +30,23 @@ import butterknife.ButterKnife;
 
 @Route(path = RouterHub.WEBVIEW_ACTIVITY)
 public class WebViewActivity extends AppCompatActivity {
-
-    public static void startUrl(String url) {
-        ARouter.getInstance().build(RouterHub.WEBVIEW_ACTIVITY)
-                .withString("url", url).navigation();
-    }
+    public static final String EXTRA_URL = "url";
 
     @BindView(R.id.web_view_web)
     WebView mWebViewWeb;
     @BindView(R.id.web_view_progress)
     ProgressBar mWebViewProgress;
 
+    public static void startUrl(String url) {
+        ARouter.getInstance().build(RouterHub.WEBVIEW_ACTIVITY)
+                .withString(EXTRA_URL, url).navigation();
+    }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
-        String mInitUrl = intent.getStringExtra("url");
+        String mInitUrl = intent.getStringExtra(EXTRA_URL);
         if (!StringUtils.isTrimEmpty(mInitUrl)) {
             setContentView(R.layout.activity_web_view);
             ButterKnife.bind(this);
@@ -146,6 +147,12 @@ public class WebViewActivity extends AppCompatActivity {
                 return true;
             case R.id.menu_refresh:
                 mWebViewWeb.reload();
+                return true;
+            case R.id.menu_open_out:
+                ActionUtils.startViewAction(mWebViewWeb.getUrl());
+                return true;
+            case R.id.menu_exit:
+                finish();
                 return true;
         }
         return super.onOptionsItemSelected(item);

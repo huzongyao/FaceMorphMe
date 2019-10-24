@@ -36,8 +36,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:drawableTop="@drawable/ic_save"
                 android:text="@string/save_image"
-                android:theme="@style/AppTheme.Button" />
+                android:theme="@style/AppTheme.IconButton" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/share_button"
@@ -45,8 +46,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_weight="1"
+                android:drawableTop="@drawable/ic_share"
                 android:text="@string/share_image"
-                android:theme="@style/AppTheme.Button" />
+                android:theme="@style/AppTheme.IconButton" />
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

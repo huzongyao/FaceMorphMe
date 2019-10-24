@@ -11,11 +11,16 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.blankj.utilcode.util.IntentUtils;
+import com.blankj.utilcode.util.SnackbarUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.bumptech.glide.Glide;
 import com.hzy.face.morphme.R;
 import com.hzy.face.morphme.consts.RouterHub;
+import com.hzy.face.morphme.utils.SaveMediaCallback;
+import com.hzy.face.morphme.utils.SpaceUtils;
 import com.hzy.face.morphme.widget.Ratio34ImageView;
+
+import java.io.File;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,6 +34,7 @@ public class GifResultActivity extends AppCompatActivity {
     Ratio34ImageView mGifImageView;
 
     private String mFilePath;
+    private boolean mSavePublic;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -62,6 +68,7 @@ public class GifResultActivity extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.save_button:
+                saveImagePublic();
                 break;
             case R.id.share_button:
                 if (!StringUtils.isTrimEmpty(mFilePath)) {
@@ -70,5 +77,29 @@ public class GifResultActivity extends AppCompatActivity {
                 }
                 break;
         }
+    }
+
+    private void saveImagePublic() {
+        if (!mSavePublic) {
+            SpaceUtils.savePublicMediaCopy(mFilePath, SpaceUtils.SAVE_TYPE_GIF,
+                    new SaveMediaCallback() {
+                        @Override
+                        public void onSuccess(File dst) {
+                            mSavePublic = true;
+                            snakeBarShow(dst.getPath());
+                        }
+
+                        @Override
+                        public void onFail() {
+
+                        }
+                    });
+        } else {
+            snakeBarShow(getString(R.string.file_saved_already));
+        }
+    }
+
+    private void snakeBarShow(String msg) {
+        SnackbarUtils.with(mGifImageView).setMessage(msg).show();
     }
 }

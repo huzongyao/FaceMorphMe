@@ -4,7 +4,16 @@
 
     <item
         android:id="@+id/menu_refresh"
-        android:icon="@drawable/ic_reload"
         android:title="@string/web_view_refresh"
-        app:showAsAction="always" />
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menu_open_out"
+        android:title="@string/open_in_browser"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menu_exit"
+        android:title="@string/exit"
+        app:showAsAction="never" />
 </menu>

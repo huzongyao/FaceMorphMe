@@ -46,7 +46,7 @@ public class MultiMorphWorker implements Runnable {
                     FaceImage img1 = mFaceImages.get(i);
                     // next image could be circular
                     FaceImage img2 = mFaceImages.get((i + 1) % listSize);
-                    if (!morphOneTransform(img1, img2)) {
+                    if (!morphOneTransform(img1, img2, i)) {
                         break;
                     }
                 }
@@ -62,7 +62,7 @@ public class MultiMorphWorker implements Runnable {
         }
     }
 
-    private boolean morphOneTransform(FaceImage img1, FaceImage img2) {
+    private boolean morphOneTransform(FaceImage img1, FaceImage img2, int index) {
         // load bitmap in every round to avoid too much memory usage
         try {
             Bitmap bmp1 = ImageUtils.getBitmap(img1.path);
@@ -73,10 +73,10 @@ public class MultiMorphWorker implements Runnable {
                 while (alpha <= 1.0f && mMorphRunning) {
                     MorpherApi.morphToBitmap(bmp1, bmp2, mOutputBitmap, img1.points,
                             img2.points, img1.indices, alpha);
-                    alpha += alphaStep;
                     if (mCallback != null) {
-                        mCallback.onOneFrame(mOutputBitmap);
+                        mCallback.onOneFrame(mOutputBitmap, index, alpha);
                     }
+                    alpha += alphaStep;
                 }
                 bmp1.recycle();
                 bmp2.recycle();

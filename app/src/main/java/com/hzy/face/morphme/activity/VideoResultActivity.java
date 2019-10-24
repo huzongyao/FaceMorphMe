@@ -10,12 +10,15 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.blankj.utilcode.util.SnackbarUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.UriUtils;
 import com.devbrackets.android.exomedia.ui.widget.VideoView;
 import com.google.android.exoplayer2.Player;
 import com.hzy.face.morphme.R;
 import com.hzy.face.morphme.consts.RouterHub;
+import com.hzy.face.morphme.utils.SaveMediaCallback;
+import com.hzy.face.morphme.utils.SpaceUtils;
 
 import java.io.File;
 
@@ -32,6 +35,7 @@ public class VideoResultActivity extends AppCompatActivity {
     VideoView mExoVideoView;
 
     private String mFilePath;
+    private boolean mSavePublic;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -70,6 +74,7 @@ public class VideoResultActivity extends AppCompatActivity {
     public void onButtonsClicked(View view) {
         switch (view.getId()) {
             case R.id.save_button:
+                saveVideoPublic();
                 break;
             case R.id.share_button:
                 if (!StringUtils.isTrimEmpty(mFilePath)) {
@@ -80,5 +85,29 @@ public class VideoResultActivity extends AppCompatActivity {
                 }
                 break;
         }
+    }
+
+    private void saveVideoPublic() {
+        if (!mSavePublic) {
+            SpaceUtils.savePublicMediaCopy(mFilePath, SpaceUtils.SAVE_TYPE_MP4,
+                    new SaveMediaCallback() {
+                        @Override
+                        public void onSuccess(File dst) {
+                            mSavePublic = true;
+                            snakeBarShow(dst.getPath());
+                        }
+
+                        @Override
+                        public void onFail() {
+
+                        }
+                    });
+        } else {
+            snakeBarShow(getString(R.string.file_saved_already));
+        }
+    }
+
+    private void snakeBarShow(String msg) {
+        SnackbarUtils.with(mExoVideoView).setMessage(msg).show();
     }
 }

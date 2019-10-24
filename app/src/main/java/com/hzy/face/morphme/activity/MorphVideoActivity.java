@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
@@ -79,6 +80,8 @@ public class MorphVideoActivity extends AppCompatActivity {
     private boolean mMorphSave;
     private String mOutputPath;
     private MP4OutputWorker mVideoWorker;
+    private int mFrameSpaceUs;
+    private ProgressBar mDialogProgress;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -97,6 +100,8 @@ public class MorphVideoActivity extends AppCompatActivity {
         mFaceExecutor = Executors.newSingleThreadExecutor();
         mImageSize = ConfigUtils.getConfigResolution();
         mTransFrameCount = ConfigUtils.getConfigFrameCount();
+        int duration = ConfigUtils.getConfigTransDuration();
+        mFrameSpaceUs = duration * 1000 / mTransFrameCount;
     }
 
     private void prepareMorphData() {
@@ -113,11 +118,15 @@ public class MorphVideoActivity extends AppCompatActivity {
             }
 
             @Override
-            protected void onOneFrame(Bitmap bitmap) {
+            protected void onOneFrame(Bitmap bitmap, int index, float alpha) {
                 if (mMorphSave) {
-                    mVideoWorker.queenFrame(bitmap);
+                    mVideoWorker.queenFrame(bitmap, mFrameSpaceUs);
                 }
-                runOnUiThread(() -> mDialogImageView.setImageBitmap(bitmap));
+                int progress = (int) ((index + alpha) * 100) / mDataList.size();
+                runOnUiThread(() -> {
+                    mDialogImageView.setImageBitmap(bitmap);
+                    mDialogProgress.setProgress(progress);
+                });
             }
 
             @Override
@@ -188,6 +197,7 @@ public class MorphVideoActivity extends AppCompatActivity {
         mImageDialog.setCancelable(false);
         mImageDialog.setContentView(R.layout.dialog_image_preview);
         mDialogImageView = mImageDialog.findViewById(R.id.dialog_image_view);
+        mDialogProgress = mImageDialog.findViewById(R.id.dialog_progress);
         mImageDialog.findViewById(R.id.dialog_btn_cancel)
                 .setOnClickListener(view -> {
                     mMorphWorker.abort();
@@ -235,6 +245,7 @@ public class MorphVideoActivity extends AppCompatActivity {
     private void morphFaceImages(boolean isSave) {
         if (mDataList.size() >= 2) {
             Glide.with(this).load(mDataList.get(0).path).into(mDialogImageView);
+            mDialogProgress.setProgress(0);
             mImageDialog.show();
             mMorphWorker.setFaceImages(mDataList);
             mMorphSave = isSave;

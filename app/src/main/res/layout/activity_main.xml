@@ -46,6 +46,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatButton
@@ -68,6 +69,30 @@
                 android:theme="@style/AppTheme.IconButton" />
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_about"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawableTop="@drawable/ic_about"
+                android:text="@string/about"
+                android:theme="@style/AppTheme.IconButton" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_source_code"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawableTop="@drawable/ic_source_code"
+                android:text="@string/source_code"
+                android:theme="@style/AppTheme.IconButton" />
+        </LinearLayout>
 
     </LinearLayout>
 </ScrollView>

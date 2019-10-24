@@ -26,6 +26,8 @@ public class VersionInfoActivity extends AppCompatActivity {
     TextView mOpencvVersion;
     @BindView(R.id.stasm_version)
     TextView mStasmVersion;
+    @BindView(R.id.libyuv_version)
+    TextView mLibyuvVersion;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -43,6 +45,7 @@ public class VersionInfoActivity extends AppCompatActivity {
     private void showLibsVersionInfo() {
         mOpencvVersion.setText("OpenCV Version: " + MorpherApi.getOpenCvVersionString());
         mStasmVersion.setText("Stasm Version: " + MorpherApi.getStasmVersionString());
+        mLibyuvVersion.setText("libyuv Version: " + MorpherApi.getLibYUVVersionString());
     }
 
     @Override

@@ -1,8 +1,6 @@
 package com.hzy.face.morphme.activity;
 
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 
 import androidx.annotation.Nullable;
@@ -26,28 +24,11 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main_activity, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.main_menu_about:
-                ARouter.getInstance().build(RouterHub.ABOUT_ACTIVITY).navigation();
-                break;
-            case R.id.main_menu_settings:
-                ARouter.getInstance().build(RouterHub.SETTINGS_ACTIVITY).navigation();
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
     @OnClick({R.id.btn_two_images,
             R.id.btn_detect_face,
             R.id.btn_settings,
+            R.id.btn_about,
+            R.id.btn_source_code,
             R.id.btn_video_export})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -62,6 +43,12 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.btn_settings:
                 ARouter.getInstance().build(RouterHub.SETTINGS_ACTIVITY).navigation();
+                break;
+            case R.id.btn_about:
+                ARouter.getInstance().build(RouterHub.ABOUT_ACTIVITY).navigation();
+                break;
+            case R.id.btn_source_code:
+                WebViewActivity.startUrl(getString(R.string.github_project_page));
                 break;
         }
     }

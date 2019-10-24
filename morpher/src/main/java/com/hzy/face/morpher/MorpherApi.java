@@ -105,6 +105,8 @@ public class MorpherApi {
 
     public static native String getStasmVersionString();
 
+    public static native String getLibYUVVersionString();
+
     /**
      * bitmap to yuv
      *
