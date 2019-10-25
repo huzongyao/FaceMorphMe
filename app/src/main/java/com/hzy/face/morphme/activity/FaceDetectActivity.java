@@ -9,9 +9,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ImageView;
-import android.widget.Spinner;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
@@ -29,6 +26,7 @@ import com.hzy.face.morphme.utils.ActionUtils;
 import com.hzy.face.morphme.utils.BitmapDrawUtils;
 import com.hzy.face.morphme.utils.CascadeUtils;
 import com.hzy.face.morphme.utils.SpaceUtils;
+import com.hzy.face.morphme.widget.Ratio34ImageView;
 import com.yalantis.ucrop.UCrop;
 
 import java.io.File;
@@ -41,12 +39,8 @@ import butterknife.OnClick;
 public class FaceDetectActivity extends AppCompatActivity {
 
     @BindView(R.id.demo_image)
-    ImageView mImageView;
-    @BindView(R.id.type_select_spinner)
-    Spinner mTypeSelectSpinner;
-
+    Ratio34ImageView mDemoImage;
     private Bitmap mDemoBitmap;
-    private int mSelectTypeIndex;
     private ProgressDialog mProgressDialog;
     private String mSelectPath;
 
@@ -62,22 +56,6 @@ public class FaceDetectActivity extends AppCompatActivity {
         mProgressDialog = new ProgressDialog(this);
         mProgressDialog.setMessage(getString(R.string.loading_wait_tips));
         mProgressDialog.setCancelable(false);
-        mTypeSelectSpinner.setOnItemSelectedListener(getTypeSelectListener());
-    }
-
-    private AdapterView.OnItemSelectedListener getTypeSelectListener() {
-        return new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                mSelectTypeIndex = i;
-                detectFromBitmap();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        };
     }
 
     @Override
@@ -90,37 +68,45 @@ public class FaceDetectActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @OnClick({R.id.btn_load_img,
-            R.id.btn_detect_face})
-    public void onViewClicked(View view) {
+    @OnClick({R.id.demo_image, R.id.btn_detect_face, R.id.btn_detect_points, R.id.btn_detect_triangle})
+    public void onButtonsClicked(View view) {
         switch (view.getId()) {
-            case R.id.btn_load_img:
+            case R.id.demo_image:
                 ActionUtils.startImageContentAction(this, RequestCode.CHOOSE_IMAGE);
                 break;
             case R.id.btn_detect_face:
-                detectFromBitmap();
+                detectFromBitmap(2);
+                break;
+            case R.id.btn_detect_points:
+                detectFromBitmap(0);
+                break;
+            case R.id.btn_detect_triangle:
+                detectFromBitmap(1);
                 break;
         }
     }
 
-    private void detectFromBitmap() {
+
+    private void detectFromBitmap(int type) {
         mDemoBitmap = ImageUtils.getBitmap(mSelectPath);
         if (mDemoBitmap != null && !mDemoBitmap.isRecycled()) {
             mProgressDialog.show();
-            mImageView.setImageBitmap(mDemoBitmap);
+            mDemoImage.setImageBitmap(mDemoBitmap);
             new Thread() {
                 @Override
                 public void run() {
-                    doDetectAsync();
+                    doDetectAsync(type);
                 }
             }.start();
+        }else{
+            snakeBarShow(getString(R.string.choose_images_first));
         }
     }
 
-    private void doDetectAsync() {
+    private void doDetectAsync(int type) {
         String cascadePath = CascadeUtils.ensureCascadePath();
         final Bitmap bitmap = mDemoBitmap.copy(Bitmap.Config.ARGB_8888, true);
-        switch (mSelectTypeIndex) {
+        switch (type) {
             case 0:
                 PointF[] points = MorpherApi.detectFaceLandmarks(bitmap, cascadePath);
                 BitmapDrawUtils.drawPointsOnBitmap(bitmap, points);
@@ -135,15 +121,15 @@ public class FaceDetectActivity extends AppCompatActivity {
                 BitmapDrawUtils.drawRectsOnBitmap(bitmap, faces);
                 break;
         }
-        mImageView.post(() -> {
-            mImageView.setImageBitmap(bitmap);
+        mDemoImage.post(() -> {
+            mDemoImage.setImageBitmap(bitmap);
             mProgressDialog.dismiss();
-            snakeBarShow("Face Detect Finished!!");
+            snakeBarShow(getString(R.string.operation_finished));
         });
     }
 
     private void snakeBarShow(String msg) {
-        SnackbarUtils.with(mImageView).setMessage(msg).show();
+        SnackbarUtils.with(mDemoImage).setMessage(msg).show();
     }
 
     @Override
@@ -170,7 +156,7 @@ public class FaceDetectActivity extends AppCompatActivity {
             // crop a image
             if (resultCode == RESULT_OK) {
                 if (data != null) {
-                    Glide.with(this).load(mSelectPath).into(mImageView);
+                    Glide.with(this).load(mSelectPath).into(mDemoImage);
                 }
             }
         }

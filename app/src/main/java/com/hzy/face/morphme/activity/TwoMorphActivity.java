@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -55,6 +56,8 @@ public class TwoMorphActivity extends AppCompatActivity {
     Ratio34ImageView mImageviewOut;
     @BindView(R.id.alpha_text)
     TextView mAlphaText;
+    @BindView(R.id.alpha_progress)
+    ProgressBar mAlphaProgress;
 
     private BurstLinker mBurstLinker;
     private String mGifFilePath;
@@ -216,6 +219,7 @@ public class TwoMorphActivity extends AppCompatActivity {
             if (isSave) {
                 snakeBarShow(getString(R.string.morphing_please_wait));
             }
+            mAlphaProgress.setProgress(0);
             mFaceExecutor.submit(() -> morphToBitmapAsync(isSave));
         } else {
             snakeBarShow(getString(R.string.choose_images_first));
@@ -241,6 +245,7 @@ public class TwoMorphActivity extends AppCompatActivity {
                         face2.points, face1.indices, alpha);
                 runOnUiThread(() -> {
                     mImageviewOut.setImageBitmap(mOutputBitmap);
+                    mAlphaProgress.setProgress((int) (alpha * 100));
                     mAlphaText.setText(getString(R.string.alpha_format_text, alpha));
                 });
                 if (needSave) {

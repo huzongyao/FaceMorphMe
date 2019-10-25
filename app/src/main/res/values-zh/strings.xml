@@ -45,4 +45,7 @@
     <string name="open_in_browser">用浏览器打开</string>
     <string name="exit">退出</string>
     <string name="rd3_open_source_libs">第三方开源库</string>
+    <string name="triangulation">三角形剖分</string>
+    <string name="landmarks">关键点识别</string>
+    <string name="operation_finished">操作完成!!</string>
 </resources>

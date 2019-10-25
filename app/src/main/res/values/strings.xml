@@ -59,4 +59,7 @@
     <string name="open_in_browser">Open In Browser</string>
     <string name="exit">Exit</string>
     <string name="rd3_open_source_libs">3rd Open Source Library</string>
+    <string name="triangulation">Triangulation</string>
+    <string name="landmarks">Landmarks</string>
+    <string name="operation_finished">Operation Finished!!</string>
 </resources>

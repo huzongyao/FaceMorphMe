@@ -1,6 +1,9 @@
 # FaceMorphMe
 FaceMorph 在Android平台的实现
 
+[![Travis](https://img.shields.io/appveyor/ci/gruntjs/grunt.svg)](https://github.com/huzongyao/FaceMorphMe/releases)
+[![Travis](https://img.shields.io/badge/API-16+-brightgreen.svg)](https://github.com/huzongyao/FaceMorphMe)
+
 #### Quick Start
 * 查看效果
 
@@ -112,6 +115,12 @@ burstLinker.release();
 
 * 使用Android统一的MediaMuxer混频封装接口(Android 4.3 (API18) 开始支持)，输出为MP4格式文件。
 
+#### Remain Problems
+1. 使用uCrop裁剪图片，不能固定输出图片的分辨率，只能指定最大分辨率，因此会有图片过小的情况。
+2. 视频生成依赖于系统的MediaCodec接口，不同的设备表现会不一致，有可能崩溃。
+3. 人脸关键点识别基于开源的stasm，效果多半没有商用产品如Face++那么好。
+4. stasm人脸关键点坐标可能位于图片之外，这会导致三角剖分崩溃或出现异常，所以人脸要尽量位于图片中。
+
 #### Reference
 1. https://www.learnopencv.com/face-morph-using-opencv-cpp-python/
 2. https://github.com/Yalantis/uCrop
@@ -132,5 +141,5 @@ burstLinker.release();
  ![image](https://raw.githubusercontent.com/hzy3774/AndroidP7zip/master/misc/wechat.png)
 
 ### Others
- * 想捐赠我喝杯热水(¥0.01起捐)</br>
+ * 想捐助我喝杯热水(¥0.01起捐)</br>
  ![donate](https://github.com/huzongyao/JChineseChess/blob/master/misc/donate.png?raw=true)
