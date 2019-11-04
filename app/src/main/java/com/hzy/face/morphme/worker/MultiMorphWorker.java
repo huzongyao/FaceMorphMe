@@ -2,9 +2,9 @@ package com.hzy.face.morphme.worker;
 
 import android.graphics.Bitmap;
 
-import com.blankj.utilcode.util.ImageUtils;
 import com.hzy.face.morpher.MorpherApi;
 import com.hzy.face.morphme.bean.FaceImage;
+import com.hzy.face.morphme.utils.FaceUtils;
 
 import java.util.List;
 
@@ -15,9 +15,13 @@ public class MultiMorphWorker implements Runnable {
     private Bitmap mOutputBitmap;
     private MorphCallback mCallback;
     private int mTransFrames = 5;
+    private int mBmpWidth;
+    private int mBmpHeight;
 
     public void setOutBitmap(Bitmap bitmap) {
         mOutputBitmap = bitmap;
+        mBmpWidth = bitmap.getWidth();
+        mBmpHeight = bitmap.getHeight();
     }
 
     public void setFaceImages(List<FaceImage> faceImages) {
@@ -65,8 +69,8 @@ public class MultiMorphWorker implements Runnable {
     private boolean morphOneTransform(FaceImage img1, FaceImage img2, int index) {
         // load bitmap in every round to avoid too much memory usage
         try {
-            Bitmap bmp1 = ImageUtils.getBitmap(img1.path);
-            Bitmap bmp2 = ImageUtils.getBitmap(img2.path);
+            Bitmap bmp1 = FaceUtils.getBmpWithSize(img1.path, mBmpWidth, mBmpHeight);
+            Bitmap bmp2 = FaceUtils.getBmpWithSize(img2.path, mBmpWidth, mBmpHeight);
             if (bmp1 != null && bmp2 != null && mOutputBitmap != null) {
                 float alphaStep = 1.0f / mTransFrames;
                 float alpha = 0f;

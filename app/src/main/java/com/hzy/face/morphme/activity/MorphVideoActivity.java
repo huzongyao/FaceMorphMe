@@ -297,7 +297,8 @@ public class MorphVideoActivity extends AppCompatActivity {
     private void detectAndAddFace() {
         mProgressDialog.show();
         mFaceExecutor.submit(() -> {
-            FaceImage faceImage = FaceUtils.getFaceFromPath(mSelectImageFile.getPath());
+            FaceImage faceImage = FaceUtils.getFaceFromPath(mSelectImageFile.getPath(),
+                    mImageSize.x, mImageSize.y);
             runOnUiThread(() -> {
                 mProgressDialog.dismiss();
                 if (faceImage == null) {

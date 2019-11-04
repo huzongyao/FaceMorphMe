@@ -19,7 +19,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.bilibili.burstlinker.BurstLinker;
-import com.blankj.utilcode.util.ImageUtils;
 import com.blankj.utilcode.util.SnackbarUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.bumptech.glide.Glide;
@@ -197,7 +196,7 @@ public class TwoMorphActivity extends AppCompatActivity {
     private void startDetectFaceInfo() {
         mProgressDialog.show();
         mFaceExecutor.submit(() -> {
-            FaceImage faceImage = FaceUtils.getFaceFromPath(mSelectPath);
+            FaceImage faceImage = FaceUtils.getFaceFromPath(mSelectPath, mImageSize.x, mImageSize.y);
             mFaceImages.set(mCurrentIndex, faceImage);
             runOnUiThread(() -> {
                 mProgressDialog.dismiss();
@@ -237,8 +236,8 @@ public class TwoMorphActivity extends AppCompatActivity {
             }
             FaceImage face1 = mFaceImages.get(0);
             FaceImage face2 = mFaceImages.get(1);
-            Bitmap bmp1 = ImageUtils.getBitmap(face1.path);
-            Bitmap bmp2 = ImageUtils.getBitmap(face2.path);
+            Bitmap bmp1 = FaceUtils.getBmpWithSize(face1.path, mImageSize.x, mImageSize.y);
+            Bitmap bmp2 = FaceUtils.getBmpWithSize(face2.path, mImageSize.x, mImageSize.y);
             while (mMorphRunning) {
                 float alpha = 1 - Math.abs(mMorphAlpha);
                 MorpherApi.morphToBitmap(bmp1, bmp2, mOutputBitmap, face1.points,
