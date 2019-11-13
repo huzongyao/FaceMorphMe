@@ -92,4 +92,12 @@
         <item>2</item>
         <item>3</item>
     </string-array>
+    <string-array name="pref_detector_array">
+        <item>Stasm(77)</item>
+        <item>SeetaFace2(81)</item>
+    </string-array>
+    <string-array name="pref_detector_value">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
 </resources>

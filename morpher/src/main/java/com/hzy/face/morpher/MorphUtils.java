@@ -1,6 +1,7 @@
 package com.hzy.face.morpher;
 
 import android.graphics.PointF;
+import android.graphics.Rect;
 import android.graphics.RectF;
 
 public class MorphUtils {
@@ -42,6 +43,23 @@ public class MorphUtils {
         for (int i = 0; i < rectCount; i++) {
             RectF rect = new RectF(floats[i * 4], floats[i * 4 + 1],
                     floats[i * 4 + 2], floats[i * 4 + 3]);
+            ret[i] = rect;
+        }
+        return ret;
+    }
+
+    /**
+     * construct RectFs by float array
+     *
+     * @param ints [r1.left, r1.top, r1.right, r1.bottom, ...]
+     * @return RectFs [r1, r2, r3...]
+     */
+    public static Rect[] intArray2RectArray(int[] ints) {
+        int rectCount = ints.length / 4;
+        Rect[] ret = new Rect[rectCount];
+        for (int i = 0; i < rectCount; i++) {
+            Rect rect = new Rect(ints[i * 4], ints[i * 4 + 1],
+                    ints[i * 4 + 2], ints[i * 4 + 3]);
             ret[i] = rect;
         }
         return ret;

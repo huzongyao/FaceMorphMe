@@ -28,7 +28,7 @@ JNI_FUNC(getLibYUVVersionString)(JNIEnv *env, jclass type) {
     return env->NewStringUTF(CVAUX_STR(LIBYUV_VERSION));
 }
 
-JNIEXPORT jfloatArray JNICALL
+JNIEXPORT jintArray JNICALL
 JNI_FUNC(nDetectFaceRect)(JNIEnv *env, jclass type, jobject bitmap, jstring classifierPath_) {
     const char *classifierPath = env->GetStringUTFChars(classifierPath_, nullptr);
     CascadeClassifier cascade(classifierPath);
@@ -44,8 +44,8 @@ JNI_FUNC(nDetectFaceRect)(JNIEnv *env, jclass type, jobject bitmap, jstring clas
     // detect
     cascade.detectMultiScale(gray, faces);
     env->ReleaseStringUTFChars(classifierPath_, classifierPath);
-    jfloatArray floatArray = rectVector2AFloatArray(env, faces);
-    return floatArray;
+    auto intArray = rectVector2AIntArray(env, faces);
+    return intArray;
 }
 
 JNIEXPORT jobjectArray JNICALL

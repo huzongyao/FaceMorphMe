@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PointF;
 import android.graphics.Rect;
-import android.graphics.RectF;
 
 public class BitmapDrawUtils {
 
@@ -53,14 +52,14 @@ public class BitmapDrawUtils {
         canvas.drawLine(p1.x, p1.y, p2.x, p2.y, paint);
     }
 
-    public static void drawRectsOnBitmap(Bitmap bitmap, RectF[] rects) {
+    public static void drawRectsOnBitmap(Bitmap bitmap, Rect[] rects) {
         Canvas canvas = new Canvas(bitmap);
         Paint paint = new Paint();
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeWidth(2);
         paint.setAntiAlias(true);
         paint.setColor(Color.MAGENTA);
-        for (RectF rect : rects) {
+        for (Rect rect : rects) {
             canvas.drawRect(rect, paint);
         }
     }

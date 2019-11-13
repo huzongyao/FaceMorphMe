@@ -8,6 +8,7 @@ import android.graphics.PointF;
 import com.blankj.utilcode.util.ImageUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.hzy.face.morpher.MorpherApi;
+import com.hzy.face.morpher.Seeta2Api;
 import com.hzy.face.morphme.bean.FaceImage;
 
 public class FaceUtils {
@@ -36,11 +37,16 @@ public class FaceUtils {
         return null;
     }
 
-    public static FaceImage getFaceFromPath(String path, int width, int height) {
+    public static FaceImage getFaceFromPath(String path, int width, int height, int detector) {
         try {
             Bitmap bitmap = getBmpWithSize(path, width, height);
-            String cascadePath = CascadeUtils.ensureCascadePath();
-            PointF[] points = MorpherApi.detectFaceLandmarks(bitmap, cascadePath, true);
+            PointF[] points = new PointF[0];
+            if (detector == 0) {
+                String cascadePath = CascadeUtils.ensureCascadePath();
+                points = MorpherApi.detectFaceLandmarks(bitmap, cascadePath, true);
+            } else if (detector == 1) {
+                points = Seeta2Api.INSTANCE.detectLandmarks(bitmap, true);
+            }
             if (points != null && points.length > 0) {
                 int[] indices = MorpherApi.getSubDivPointIndex(bitmap.getWidth(),
                         bitmap.getHeight(), points);

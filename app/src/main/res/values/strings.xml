@@ -4,6 +4,7 @@
     <string name="pref_trans_delay_key" translatable="false">pref_trans_delay_key</string>
     <string name="pref_ditherer_key" translatable="false">pref_ditherer_key</string>
     <string name="pref_quantizer_key" translatable="false">pref_quantizer_key</string>
+    <string name="pref_detector_key" translatable="false">pref_detector_key</string>
 
     <string name="app_source_code" translatable="false">FaceMorphMe</string>
     <string name="github_project_page" translatable="false">https://github.com/huzongyao/FaceMorphMe</string>
@@ -62,4 +63,8 @@
     <string name="triangulation">Triangulation</string>
     <string name="landmarks">Landmarks</string>
     <string name="operation_finished">Operation Finished!!</string>
+    <string name="seeta_detect">Seeta Detect</string>
+    <string name="seeta_points">Seeta Points</string>
+    <string name="face_detector">Face Detector</string>
+    <string name="pref_face_detector_summary">Landmark Detector For Morph: %s</string>
 </resources>

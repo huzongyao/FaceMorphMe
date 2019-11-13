@@ -54,12 +54,26 @@ VENUS_SOURCE := \
 LIBYUV_SOURCE := \
     $(wildcard $(LOCAL_PATH)/libyuv/source/*.cc) \
 
+SEETA2_SOURCE := \
+    $(wildcard $(LOCAL_PATH)/seeta2/SeetaNet/src/*.cpp) \
+    $(wildcard $(LOCAL_PATH)/seeta2/SeetaNet/src/orz/mem/*.cpp) \
+    $(wildcard $(LOCAL_PATH)/seeta2/SeetaNet/src/orz/sync/*.cpp) \
+    $(wildcard $(LOCAL_PATH)/seeta2/SeetaNet/src/orz/tools/*.cpp) \
+    $(wildcard $(LOCAL_PATH)/seeta2/FaceDetector/src/*.cpp) \
+
 LOCAL_SRC_FILES += $(MORPHER_SOURCE)
 LOCAL_SRC_FILES += $(STASM_SOURCE)
 LOCAL_SRC_FILES += $(VENUS_SOURCE)
 LOCAL_SRC_FILES += $(LIBYUV_SOURCE)
+LOCAL_SRC_FILES += $(SEETA2_SOURCE)
 
 LOCAL_C_INCLUDES += $(LOCAL_PATH)/libyuv/include
+
+LOCAL_C_INCLUDES += $(LOCAL_PATH)/seeta2/SeetaNet/include
+LOCAL_C_INCLUDES += $(LOCAL_PATH)/seeta2/SeetaNet/src
+LOCAL_C_INCLUDES += $(LOCAL_PATH)/seeta2/SeetaNet/src/include_inner
+LOCAL_C_INCLUDES += $(LOCAL_PATH)/seeta2/SeetaNet/src/include_inner/layers
+LOCAL_C_INCLUDES += $(LOCAL_PATH)/seeta2/FaceDetector/include
 
 LOCAL_CXXFLAGS += -Wall -std=c++11 -frtti -fexceptions -ffunction-sections -fdata-sections
 LOCAL_CXXFLAGS += -DLIBYUV_NEON

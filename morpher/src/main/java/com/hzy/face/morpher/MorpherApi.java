@@ -2,6 +2,7 @@ package com.hzy.face.morpher;
 
 import android.graphics.Bitmap;
 import android.graphics.PointF;
+import android.graphics.Rect;
 import android.graphics.RectF;
 
 public class MorpherApi {
@@ -15,9 +16,9 @@ public class MorpherApi {
      * @param classifierPath model file path
      * @return face rects, could be more than one
      */
-    public static RectF[] detectFaceRect(Bitmap bitmap, String classifierPath) {
-        float[] floats = nDetectFaceRect(bitmap, classifierPath);
-        return MorphUtils.floatArray2RectFArray(floats);
+    public static Rect[] detectFaceRect(Bitmap bitmap, String classifierPath) {
+        int[] floats = nDetectFaceRect(bitmap, classifierPath);
+        return MorphUtils.intArray2RectArray(floats);
     }
 
     /**
@@ -125,7 +126,7 @@ public class MorpherApi {
      * @param classifierPath classifier Path
      * @return faces rect [r1.left, r1.top, r1.right, r1.bottom, ...]
      */
-    private static native float[] nDetectFaceRect(Bitmap bitmap, String classifierPath);
+    private static native int[] nDetectFaceRect(Bitmap bitmap, String classifierPath);
 
     /**
      * detect face key points

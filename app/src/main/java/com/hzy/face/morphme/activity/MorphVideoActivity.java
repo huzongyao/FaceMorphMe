@@ -30,6 +30,7 @@ import com.hzy.face.morphme.consts.RequestCode;
 import com.hzy.face.morphme.consts.RouterHub;
 import com.hzy.face.morphme.event.ItemDragEvent;
 import com.hzy.face.morphme.utils.ActionUtils;
+import com.hzy.face.morphme.utils.CascadeUtils;
 import com.hzy.face.morphme.utils.ConfigUtils;
 import com.hzy.face.morphme.utils.FaceUtils;
 import com.hzy.face.morphme.utils.SpaceUtils;
@@ -82,6 +83,7 @@ public class MorphVideoActivity extends AppCompatActivity {
     private MP4OutputWorker mVideoWorker;
     private int mFrameSpaceUs;
     private ProgressBar mDialogProgress;
+    private int mDetectorIndex;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -100,8 +102,10 @@ public class MorphVideoActivity extends AppCompatActivity {
         mFaceExecutor = Executors.newSingleThreadExecutor();
         mImageSize = ConfigUtils.getConfigResolution();
         mTransFrameCount = ConfigUtils.getConfigFrameCount();
+        mDetectorIndex = ConfigUtils.getConfigDetector();
         int duration = ConfigUtils.getConfigTransDuration();
         mFrameSpaceUs = duration * 1000 / mTransFrameCount;
+        mFaceExecutor.submit(CascadeUtils::initSeetaApi);
     }
 
     private void prepareMorphData() {
@@ -298,7 +302,7 @@ public class MorphVideoActivity extends AppCompatActivity {
         mProgressDialog.show();
         mFaceExecutor.submit(() -> {
             FaceImage faceImage = FaceUtils.getFaceFromPath(mSelectImageFile.getPath(),
-                    mImageSize.x, mImageSize.y);
+                    mImageSize.x, mImageSize.y, mDetectorIndex);
             runOnUiThread(() -> {
                 mProgressDialog.dismiss();
                 if (faceImage == null) {

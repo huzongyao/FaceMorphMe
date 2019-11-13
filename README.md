@@ -66,6 +66,14 @@ int stasm_search_single(     // wrapper for stasm_search_auto and friends
     const char*  imgpath,    // in: image path, used only for err msgs and debug
     const char*  datadir);   // in: directory of face detector files
 ```
+ * SeetaFace2也是一个可行的方案，可以参考[SeetaFace2](https://github.com/seetafaceengine/SeetaFace2)
+  可以实现人脸81个关键点识别，不依赖于OpenCV，效果也不错，不过相比于Stasm，SeetaFace2不会标注人脑门上的关键点。
+```c
+// 人脸检测
+SeetaFaceInfoArray FaceDetector::detect( const SeetaImageData &image);
+// 关键点识别
+void FaceLandmarker::mark( const SeetaImageData &image, const SeetaRect &face, SeetaPointF *points);
+```
 
 2. 点集的三角剖分
  * 所谓Delaunay三角剖分，是一种算法，研究如何把一个离散几何剖分成不均匀的三角形网格，这就是离散点的三角剖分问题，
@@ -126,6 +134,7 @@ burstLinker.release();
 2. https://github.com/Yalantis/uCrop
 3. https://github.com/bilibili/BurstLinker
 4. https://github.com/brianwernick/ExoMedia
+5. https://github.com/seetafaceengine/SeetaFace2
 
 ### About Me
  * GitHub: [https://huzongyao.github.io/](https://huzongyao.github.io/)

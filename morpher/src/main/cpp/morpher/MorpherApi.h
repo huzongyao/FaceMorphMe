@@ -22,7 +22,7 @@ JNI_FUNC(getStasmVersionString)(JNIEnv *env, jclass type);
 JNIEXPORT jstring JNICALL
 JNI_FUNC(getLibYUVVersionString)(JNIEnv *env, jclass type);
 
-JNIEXPORT jfloatArray JNICALL
+JNIEXPORT jintArray JNICALL
 JNI_FUNC(nDetectFaceRect)(JNIEnv *env, jclass type, jobject bitmap, jstring classifierPath_);
 
 JNIEXPORT jobjectArray JNICALL

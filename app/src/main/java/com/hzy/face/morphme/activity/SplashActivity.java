@@ -32,6 +32,7 @@ public class SplashActivity extends Activity {
             public void run() {
                 try {
                     String path = CascadeUtils.ensureCascadePath();
+                    CascadeUtils.ensureSeetaPath();
                     Thread.sleep(1000);
                     if (!StringUtils.isTrimEmpty(path)) {
                         isAssetsLoad = true;

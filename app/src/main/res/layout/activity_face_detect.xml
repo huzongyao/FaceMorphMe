@@ -68,8 +68,21 @@
                     android:layout_height="wrap_content"
                     android:text="@string/triangulation"
                     android:theme="@style/AppTheme.Button" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_seeta_detect"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/seeta_detect"
+                    android:theme="@style/AppTheme.Button" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_seeta_landmarks"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/seeta_points"
+                    android:theme="@style/AppTheme.Button" />
             </LinearLayout>
         </LinearLayout>
-
     </LinearLayout>
 </ScrollView>

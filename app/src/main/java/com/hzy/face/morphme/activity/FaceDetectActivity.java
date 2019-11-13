@@ -4,7 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.PointF;
-import android.graphics.RectF;
+import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -19,6 +19,7 @@ import com.blankj.utilcode.util.ImageUtils;
 import com.blankj.utilcode.util.SnackbarUtils;
 import com.bumptech.glide.Glide;
 import com.hzy.face.morpher.MorpherApi;
+import com.hzy.face.morpher.Seeta2Api;
 import com.hzy.face.morphme.R;
 import com.hzy.face.morphme.consts.RequestCode;
 import com.hzy.face.morphme.consts.RouterHub;
@@ -30,6 +31,8 @@ import com.hzy.face.morphme.widget.Ratio34ImageView;
 import com.yalantis.ucrop.UCrop;
 
 import java.io.File;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -43,6 +46,7 @@ public class FaceDetectActivity extends AppCompatActivity {
     private Bitmap mDemoBitmap;
     private ProgressDialog mProgressDialog;
     private String mSelectPath;
+    private ExecutorService mExecutor;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,6 +60,8 @@ public class FaceDetectActivity extends AppCompatActivity {
         mProgressDialog = new ProgressDialog(this);
         mProgressDialog.setMessage(getString(R.string.loading_wait_tips));
         mProgressDialog.setCancelable(false);
+        mExecutor = Executors.newSingleThreadExecutor();
+        mExecutor.submit(CascadeUtils::initSeetaApi);
     }
 
     @Override
@@ -68,7 +74,9 @@ public class FaceDetectActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @OnClick({R.id.demo_image, R.id.btn_detect_face, R.id.btn_detect_points, R.id.btn_detect_triangle})
+    @OnClick({R.id.demo_image, R.id.btn_detect_face,
+            R.id.btn_detect_points, R.id.btn_detect_triangle,
+            R.id.btn_seeta_detect, R.id.btn_seeta_landmarks})
     public void onButtonsClicked(View view) {
         switch (view.getId()) {
             case R.id.demo_image:
@@ -83,6 +91,12 @@ public class FaceDetectActivity extends AppCompatActivity {
             case R.id.btn_detect_triangle:
                 detectFromBitmap(1);
                 break;
+            case R.id.btn_seeta_detect:
+                detectFromBitmap(3);
+                break;
+            case R.id.btn_seeta_landmarks:
+                detectFromBitmap(4);
+                break;
         }
     }
 
@@ -92,13 +106,8 @@ public class FaceDetectActivity extends AppCompatActivity {
         if (mDemoBitmap != null && !mDemoBitmap.isRecycled()) {
             mProgressDialog.show();
             mDemoImage.setImageBitmap(mDemoBitmap);
-            new Thread() {
-                @Override
-                public void run() {
-                    doDetectAsync(type);
-                }
-            }.start();
-        }else{
+            mExecutor.submit(() -> doDetectAsync(type));
+        } else {
             snakeBarShow(getString(R.string.choose_images_first));
         }
     }
@@ -117,11 +126,19 @@ public class FaceDetectActivity extends AppCompatActivity {
                 BitmapDrawUtils.drawPointsOnBitmap(bitmap, points);
                 break;
             case 2:
-                RectF[] faces = MorpherApi.detectFaceRect(bitmap, CascadeUtils.getCascadeFacePath());
+                Rect[] faces = MorpherApi.detectFaceRect(bitmap, CascadeUtils.getCascadeFacePath());
                 BitmapDrawUtils.drawRectsOnBitmap(bitmap, faces);
                 break;
+            case 3:
+                faces = Seeta2Api.INSTANCE.detectFaceRect(bitmap);
+                BitmapDrawUtils.drawRectsOnBitmap(bitmap, faces);
+                break;
+            case 4:
+                points = Seeta2Api.INSTANCE.detectLandmarks(bitmap);
+                BitmapDrawUtils.drawPointsOnBitmap(bitmap, points);
+                break;
         }
-        mDemoImage.post(() -> {
+        runOnUiThread(() -> {
             mDemoImage.setImageBitmap(bitmap);
             mProgressDialog.dismiss();
             snakeBarShow(getString(R.string.operation_finished));

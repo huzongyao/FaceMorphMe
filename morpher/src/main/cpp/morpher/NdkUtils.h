@@ -6,6 +6,7 @@
 #define FACEMORPHME_NDKUTILS_H
 
 #include <cv.h>
+#include "SeetaDetector.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -68,12 +69,12 @@ jobjectArray point2fVector2APointFArray(JNIEnv *env, const std::vector<Point2f> 
 jfloatArray point2fVector2AFloatArray(JNIEnv *env, const std::vector<Point2f> &points);
 
 /**
- * convert rects to java float array
+ * convert rects to java int array
  * @param env
  * @param rects
  * @return
  */
-jfloatArray rectVector2AFloatArray(JNIEnv *env, const std::vector<Rect> &rects);
+jintArray rectVector2AIntArray(JNIEnv *env, const std::vector<Rect> &rects);
 
 /**
  * convert jfloatArray to point2fVector
@@ -83,6 +84,22 @@ jfloatArray rectVector2AFloatArray(JNIEnv *env, const std::vector<Rect> &rects);
  * @return point count
  */
 jsize jFloatArray2point2fVector(JNIEnv *env, jfloatArray _floats, std::vector<Point2f> &points);
+
+/**
+ * convert seeta result to int array
+ * @param env
+ * @param rects
+ * @return
+ */
+jintArray seetaFaces2AIntArray(JNIEnv *env, SeetaFaceInfoArray &rects);
+
+/**
+ * convert points to android PointF array
+ * @param env
+ * @param points
+ * @return
+ */
+jfloatArray seetaPoints2AFloats(JNIEnv *env, const std::vector<SeetaPointF> &points);
 
 #ifdef __cplusplus
 }
