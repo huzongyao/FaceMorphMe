@@ -6,10 +6,9 @@ FaceMorph 在Android平台的实现
 
 #### Quick Start
 
-* 查看效果
-|  Face Morphing |
-| ------------ |
-|![pic](https://github.com/huzongyao/FaceMorphMe/blob/master/misc/example.gif?raw=true)|
+* 查看Face Morphing 效果:
+
+![pic](https://github.com/huzongyao/FaceMorphMe/blob/master/misc/example.gif?raw=true)
 
 * 下载App体验：[下载地址](https://github.com/huzongyao/FaceMorphMe/releases/latest)
 
