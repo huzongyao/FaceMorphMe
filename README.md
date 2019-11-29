@@ -5,14 +5,11 @@ FaceMorph 在Android平台的实现
 [![Travis](https://img.shields.io/badge/API-16+-brightgreen.svg)](https://github.com/huzongyao/FaceMorphMe)
 
 #### Quick Start
+
 * 查看效果
-![pic](https://github.com/huzongyao/FaceMorphMe/blob/master/misc/example.gif?raw=true)
-
-* 步骤说明
-
-|  Face Detection | Delaunay Triangulation | Face Morphing |
-| ------------ | -------------- | ---------------------- |
-|![pic](https://github.com/huzongyao/FaceMorphMe/blob/master/misc/screen1.png?raw=true)|![pic](https://github.com/huzongyao/FaceMorphMe/blob/master/misc/screen2.png?raw=true)|![pic](https://github.com/huzongyao/FaceMorphMe/blob/master/misc/demo1.gif?raw=true)|
+|  Face Morphing |
+| ------------ |
+|![pic](https://github.com/huzongyao/FaceMorphMe/blob/master/misc/example.gif?raw=true)|
 
 * 下载App体验：[下载地址](https://github.com/huzongyao/FaceMorphMe/releases/latest)
 
