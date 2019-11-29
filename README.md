@@ -6,6 +6,9 @@ FaceMorph 在Android平台的实现
 
 #### Quick Start
 * 查看效果
+![pic](https://github.com/huzongyao/FaceMorphMe/blob/master/misc/example.gif?raw=true)
+
+* 步骤说明
 
 |  Face Detection | Delaunay Triangulation | Face Morphing |
 | ------------ | -------------- | ---------------------- |
