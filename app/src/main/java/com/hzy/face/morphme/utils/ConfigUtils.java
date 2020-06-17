@@ -87,14 +87,4 @@ public class ConfigUtils {
             return 0;
         }
     }
-
-    public static int getConfigDetector() {
-        try {
-            SharedPreferences pref = getPrefrence();
-            String key = Utils.getApp().getString(R.string.pref_detector_key);
-            return Integer.parseInt(pref.getString(key, "1"));
-        } catch (Exception e) {
-            return 1;
-        }
-    }
 }

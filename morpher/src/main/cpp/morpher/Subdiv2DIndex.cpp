@@ -10,12 +10,12 @@ Subdiv2DIndex::Subdiv2DIndex(Rect rectangle) : Subdiv2D(rectangle) {
 void Subdiv2DIndex::getTrianglesIndices(std::vector<int> &triangleList) const {
     triangleList.clear();
     int i, total = (int) (qedges.size() * 4);
-    std::vector<bool> edgemask(total, false);
+    std::vector<bool> edge_mask(total, false);
     const bool filterPoints = true;
     Rect2f rect(topLeft.x, topLeft.y, bottomRight.x - topLeft.x, bottomRight.y - topLeft.y);
 
     for (i = 4; i < total; i += 2) {
-        if (edgemask[i])
+        if (edge_mask[i])
             continue;
         Point2f a, b, c;
         int edge_a = i;
@@ -30,9 +30,9 @@ void Subdiv2DIndex::getTrianglesIndices(std::vector<int> &triangleList) const {
         int indexC = edgeOrg(edge_c, &c) - 4;
         if (filterPoints && !rect.contains(c))
             continue;
-        edgemask[edge_a] = true;
-        edgemask[edge_b] = true;
-        edgemask[edge_c] = true;
+        edge_mask[edge_a] = true;
+        edge_mask[edge_b] = true;
+        edge_mask[edge_c] = true;
         triangleList.push_back(indexA);
         triangleList.push_back(indexB);
         triangleList.push_back(indexC);

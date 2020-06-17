@@ -33,10 +33,8 @@ make: *** No rule to make target `morpher/src/main/cpp/opencv/jni/OpenCV.mk'.  S
 * 为了减小源码的大小，OpenCV库相关文件使用gitignore排除了，所以编译前需要手动将OpenCV静态库和头文件拷贝到
   morpher/src/main/cpp/opencv目录下。
 * OpenCV静态库和头文件的获取有三种方式：</br>
-  1.[官方下载](https://opencv.org/releases/),选择3.x版本(目前版本3.4.7需要用旧版NDK才行，不能使用c++_static)</br>
-  2.下载我编译的版本：[libopencv-3.4.7.7z](https://github.com/huzongyao/FaceMorphMe/releases/download/v1.0.0/libopencv-3.4.7.7z)(新版本NDK可用)</br>
-  3.自己编译一个(先build，再strip，参考misc/script/目录下的脚本)</br>
-* 为什么要使用OpenCV3.x而不是4.x：使用到的Stasm库对OpenCV3.x支持较好，不需要改太多代码。
+  1.[官方下载](https://opencv.org/releases/),选择4.x</br>
+  2.自己编译一个(先build，再strip，参考misc/script/目录下的脚本)</br>
 
 ##### Process:
 1. 人脸识别，人脸关键点识别
@@ -44,7 +42,7 @@ make: *** No rule to make target `morpher/src/main/cpp/opencv/jni/OpenCV.mk'.  S
 ``` c++
 CascadeClassifier cascade(classifierPath);
 // 如果是彩图可以先转成灰度图
-cvtColor(image, gray, CV_RGBA2GRAY);
+cvtColor(image, gray, COLOR_RGBA2GRAY);
 std::vector<Rect> faces;
 cascade.detectMultiScale(gray, faces);
 ```
@@ -52,7 +50,7 @@ cascade.detectMultiScale(gray, faces);
  [Stasm](http://www.milbo.users.sonic.net/stasm/) + [OpenCV](https://opencv.org/),
  * 使用Dlib的话可以参照[face_landmark_detection](http://dlib.net/face_landmark_detection_ex.cpp.html)
  来获取人脸68个关键点，不依赖于OpenCV，但是需要61M的模型文件。
- * 使用Stasm可以参考示例[minimal](http://www.milbo.users.sonic.net/stasm/minimal.html)
+ * [removed]使用Stasm可以参考示例[minimal](http://www.milbo.users.sonic.net/stasm/minimal.html)
  使用它可以获取77个人脸关键点, 只需要OpenCV的几个xml的模型文件，
  体积比dlib的模型小，比较适合移动端设备使用，所以我选择了这个。接口如下：
 ```c

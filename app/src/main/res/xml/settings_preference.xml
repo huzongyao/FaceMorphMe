@@ -1,28 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <ListPreference
-        android:defaultValue="1"
-        android:entries="@array/pref_detector_array"
-        android:entryValues="@array/pref_detector_value"
-        android:key="@string/pref_detector_key"
-        android:summary="@string/pref_face_detector_summary"
-        android:title="@string/face_detector" />
-    <ListPreference
-        android:defaultValue="0"
+        android:defaultValue="2"
         android:entries="@array/pref_resolution_array"
         android:entryValues="@array/pref_resolution_value"
         android:key="@string/pref_resolution_key"
         android:summary="@string/pref_resolution_summary"
         android:title="@string/resolution" />
     <ListPreference
-        android:defaultValue="0"
+        android:defaultValue="3"
         android:entries="@array/pref_frames_array"
         android:entryValues="@array/pref_frames_value"
         android:key="@string/pref_frames_key"
         android:summary="@string/pref_frames_summary"
         android:title="@string/frame_count" />
     <ListPreference
-        android:defaultValue="800"
+        android:defaultValue="1000"
         android:entries="@array/pref_delay_array"
         android:entryValues="@array/pref_delay_array"
         android:key="@string/pref_trans_delay_key"

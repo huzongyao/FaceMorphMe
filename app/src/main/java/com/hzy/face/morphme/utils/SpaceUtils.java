@@ -34,7 +34,7 @@ public class SpaceUtils {
                             } else if (type == SAVE_TYPE_MP4) {
                                 dstFile = newPublicMp4File();
                             }
-                            FileUtils.copyFile(src, dstFile.getPath());
+                            FileUtils.copy(src, dstFile.getPath());
                             if (cb != null) {
                                 cb.onSuccess(dstFile);
                             }

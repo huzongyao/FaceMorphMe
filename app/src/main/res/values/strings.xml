@@ -4,14 +4,12 @@
     <string name="pref_trans_delay_key" translatable="false">pref_trans_delay_key</string>
     <string name="pref_ditherer_key" translatable="false">pref_ditherer_key</string>
     <string name="pref_quantizer_key" translatable="false">pref_quantizer_key</string>
-    <string name="pref_detector_key" translatable="false">pref_detector_key</string>
 
     <string name="app_source_code" translatable="false">FaceMorphMe</string>
     <string name="github_project_page" translatable="false">https://github.com/huzongyao/FaceMorphMe</string>
     <string name="github_project_release" translatable="false">https://github.com/huzongyao/FaceMorphMe/releases/latest</string>
     <string name="github_user_page" translatable="false">https://github.com/huzongyao</string>
     <string name="opencv_intro" translatable="false">OpenCV (Open Source Computer Vision Library) is an open source computer vision and machine learning software library. OpenCV was built to provide a common infrastructure for computer vision applications and to accelerate the use of machine perception in the commercial products. Being a BSD-licensed product, OpenCV makes it easy for businesses to utilize and modify the code.</string>
-    <string name="stasm_intro" translatable="false">Stasm is a C++ software library for finding features in faces. You give it an image of a face and it returns the positions of the facial features. Stasm is based on the Active Shape Model of Tim Cootes and his colleagues. Stasm is designed to work on front views of faces with neutral expressions. It performed very well in an independent 2013 comparative study. Source code is provided under a BSD style license. OpenCV is required.</string>
     <string name="libyuv_intro" translatable="false">libyuv is an open source project that includes YUV scaling and conversion functionality.</string>
 
     <string name="app_name">MorphMe</string>
@@ -65,6 +63,4 @@
     <string name="operation_finished">Operation Finished!!</string>
     <string name="seeta_detect">Seeta Detect</string>
     <string name="seeta_points">Seeta Points</string>
-    <string name="face_detector">Face Detector</string>
-    <string name="pref_face_detector_summary">Landmark Detector For Morph: %s</string>
 </resources>

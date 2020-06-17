@@ -37,17 +37,11 @@ public class FaceUtils {
         return null;
     }
 
-    public static FaceImage getFaceFromPath(String path, int width, int height, int detector) {
+    public static FaceImage getFaceFromPath(String path, int width, int height) {
         try {
             Bitmap bitmap = getBmpWithSize(path, width, height);
-            PointF[] points = new PointF[0];
-            if (detector == 0) {
-                String cascadePath = CascadeUtils.ensureCascadePath();
-                points = MorpherApi.detectFaceLandmarks(bitmap, cascadePath, true);
-            } else if (detector == 1) {
-                points = Seeta2Api.INSTANCE.detectLandmarks(bitmap, true);
-            }
-            if (points != null && points.length > 0) {
+            PointF[] points = Seeta2Api.INSTANCE.detectLandmarks(bitmap, true);
+            if (points.length > 0) {
                 int[] indices = MorpherApi.getSubDivPointIndex(bitmap.getWidth(),
                         bitmap.getHeight(), points);
                 if (indices != null && indices.length > 0) {

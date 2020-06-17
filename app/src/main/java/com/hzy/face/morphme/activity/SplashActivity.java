@@ -8,7 +8,7 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.blankj.utilcode.util.StringUtils;
 import com.hzy.face.morphme.R;
 import com.hzy.face.morphme.consts.RouterHub;
-import com.hzy.face.morphme.utils.CascadeUtils;
+import com.hzy.face.morphme.utils.ModelFileUtils;
 
 @Route(path = RouterHub.SPLASH_ACTIVITY)
 public class SplashActivity extends Activity {
@@ -31,8 +31,8 @@ public class SplashActivity extends Activity {
             @Override
             public void run() {
                 try {
-                    String path = CascadeUtils.ensureCascadePath();
-                    CascadeUtils.ensureSeetaPath();
+                    String path = ModelFileUtils.ensureCascadePath();
+                    ModelFileUtils.ensureSeetaPath();
                     Thread.sleep(1000);
                     if (!StringUtils.isTrimEmpty(path)) {
                         isAssetsLoad = true;

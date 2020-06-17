@@ -3,11 +3,8 @@ package com.hzy.face.morpher;
 import android.graphics.Bitmap;
 import android.graphics.PointF;
 import android.graphics.Rect;
-import android.graphics.RectF;
 
 public class MorpherApi {
-
-    public static final boolean NATIVE_POINTF = false;
 
     /**
      * detect faces from a bitmap
@@ -19,55 +16,6 @@ public class MorpherApi {
     public static Rect[] detectFaceRect(Bitmap bitmap, String classifierPath) {
         int[] floats = nDetectFaceRect(bitmap, classifierPath);
         return MorphUtils.intArray2RectArray(floats);
-    }
-
-    /**
-     * detect the face landmark points in a bitmap
-     *
-     * @param bitmap         bitmap
-     * @param classifierPath classifier directory, ensure model files is there
-     * @return points
-     */
-    public static PointF[] detectFaceLandmarks(Bitmap bitmap, String classifierPath) {
-        return detectFaceLandmarks(bitmap, classifierPath, false);
-    }
-
-    /**
-     * detect the face landmark points in a bitmap
-     *
-     * @param bitmap         bitmap
-     * @param classifierPath classifier directory
-     * @param withCorners    if you need bitmap border key points(for triangulation the whole image)
-     * @return points
-     */
-    public static PointF[] detectFaceLandmarks(Bitmap bitmap, String classifierPath, boolean withCorners) {
-        PointF[] points;
-        if (NATIVE_POINTF) {
-            points = nDetectFace(bitmap, "stub", classifierPath);
-        } else {
-            float[] numbers = nDetectFaceFArray(bitmap, "stub", classifierPath, withCorners);
-            points = MorphUtils.floatArray2PointFArray(numbers);
-        }
-        return points;
-    }
-
-    /**
-     * detect the face landmark points in a bitmap like detectFaceLandmarks,
-     * but the points are ordered with triangles that could divide the whole image
-     *
-     * @param bitmap         bitmap
-     * @param classifierPath classifier directory
-     * @return triangle vertexes [tr1.a, tr1.b, tr1.c, tr2.a, ...]
-     */
-    public static PointF[] getFaceSubDiv(Bitmap bitmap, String classifierPath) {
-        PointF[] points;
-        if (NATIVE_POINTF) {
-            points = nGetFaceSubDiv(bitmap, "stub", classifierPath);
-        } else {
-            float[] numbers = nGetFaceSubDivFArray(bitmap, "stub", classifierPath);
-            points = MorphUtils.floatArray2PointFArray(numbers);
-        }
-        return points;
     }
 
     /**
@@ -104,8 +52,6 @@ public class MorpherApi {
 
     public static native String getOpenCvVersionString();
 
-    public static native String getStasmVersionString();
-
     public static native String getLibYUVVersionString();
 
     /**
@@ -127,45 +73,6 @@ public class MorpherApi {
      * @return faces rect [r1.left, r1.top, r1.right, r1.bottom, ...]
      */
     private static native int[] nDetectFaceRect(Bitmap bitmap, String classifierPath);
-
-    /**
-     * detect face key points
-     *
-     * @param bitmap         src bitmap
-     * @param imgPath        some tag for log, not important
-     * @param classifierPath classifier Path
-     * @return key points
-     */
-    private static native PointF[] nDetectFace(Bitmap bitmap, String imgPath, String classifierPath);
-
-    /**
-     * @param bitmap         src bitmap
-     * @param imgPath        some tag for log, not important
-     * @param classifierPath classifier Path
-     * @param withCorners    if you want photo corner points
-     * @return [p1.x, p1.y, p2.x, p2.y, ...]
-     */
-    private static native float[] nDetectFaceFArray(Bitmap bitmap, String imgPath, String classifierPath, boolean withCorners);
-
-    /**
-     * Detect one face and sub div with the key points
-     *
-     * @param bitmap         src bitmap
-     * @param imgPath        some tag for log, not important
-     * @param classifierPath classifier Path
-     * @return div points [tr1.p1.x, tr1.p1.y, tr1.p2.x, tr1.p2.y, tr1.p3.x, tr1.p3.y, ...]
-     */
-    private static native PointF[] nGetFaceSubDiv(Bitmap bitmap, String imgPath, String classifierPath);
-
-    /**
-     * Detect one face and sub div with the key points
-     *
-     * @param bitmap         src bitmap
-     * @param imgPath        some tag for log, not important
-     * @param classifierPath classifier Path
-     * @return [p1.x, p1.y, p2.x, p2.y, ...]
-     */
-    private static native float[] nGetFaceSubDivFArray(Bitmap bitmap, String imgPath, String classifierPath);
 
     /**
      * * Return 8 key points of a rect

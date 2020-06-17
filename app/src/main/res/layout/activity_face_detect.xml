@@ -56,20 +56,6 @@
                     android:theme="@style/AppTheme.Button" />
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btn_detect_points"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/landmarks"
-                    android:theme="@style/AppTheme.Button" />
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btn_detect_triangle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/triangulation"
-                    android:theme="@style/AppTheme.Button" />
-
-                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btn_seeta_detect"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

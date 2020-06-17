@@ -5,7 +5,6 @@
 #ifndef FACEMORPHME_MORPHUTILS_H
 #define FACEMORPHME_MORPHUTILS_H
 
-#include <cv.h>
 #include <opencv2/opencv.hpp>
 
 using namespace cv;

@@ -28,7 +28,7 @@ import com.hzy.face.morphme.bean.FaceImage;
 import com.hzy.face.morphme.consts.RequestCode;
 import com.hzy.face.morphme.consts.RouterHub;
 import com.hzy.face.morphme.utils.ActionUtils;
-import com.hzy.face.morphme.utils.CascadeUtils;
+import com.hzy.face.morphme.utils.ModelFileUtils;
 import com.hzy.face.morphme.utils.ConfigUtils;
 import com.hzy.face.morphme.utils.FaceUtils;
 import com.hzy.face.morphme.utils.SpaceUtils;
@@ -75,7 +75,6 @@ public class TwoMorphActivity extends AppCompatActivity {
     private Bitmap mOutputBitmap;
     private String mSelectPath;
     private int mCurrentIndex;
-    private int mDetectorIndex;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -96,7 +95,7 @@ public class TwoMorphActivity extends AppCompatActivity {
         mProgressDialog = new ProgressDialog(this);
         mProgressDialog.setMessage(getString(R.string.loading_wait_tips));
         mProgressDialog.setCancelable(false);
-        mFaceExecutor.submit(CascadeUtils::initSeetaApi);
+        mFaceExecutor.submit(ModelFileUtils::initSeetaApi);
     }
 
     private void initConfigurations() {
@@ -110,7 +109,6 @@ public class TwoMorphActivity extends AppCompatActivity {
         mFrameDelayMs = duration / frames;
         mGifQuantizer = ConfigUtils.getConfigGifQuantizer();
         mGifDitherer = ConfigUtils.getConfigGifDitherer();
-        mDetectorIndex = ConfigUtils.getConfigDetector();
     }
 
     @Override
@@ -201,7 +199,7 @@ public class TwoMorphActivity extends AppCompatActivity {
         mProgressDialog.show();
         mFaceExecutor.submit(() -> {
             FaceImage faceImage = FaceUtils.getFaceFromPath(
-                    mSelectPath, mImageSize.x, mImageSize.y, mDetectorIndex);
+                    mSelectPath, mImageSize.x, mImageSize.y);
             mFaceImages.set(mCurrentIndex, faceImage);
             runOnUiThread(() -> {
                 mProgressDialog.dismiss();

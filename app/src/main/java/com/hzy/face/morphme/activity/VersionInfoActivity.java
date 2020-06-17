@@ -24,8 +24,6 @@ public class VersionInfoActivity extends AppCompatActivity {
 
     @BindView(R.id.opencv_version)
     TextView mOpencvVersion;
-    @BindView(R.id.stasm_version)
-    TextView mStasmVersion;
     @BindView(R.id.libyuv_version)
     TextView mLibyuvVersion;
 
@@ -44,7 +42,6 @@ public class VersionInfoActivity extends AppCompatActivity {
     @SuppressLint("SetTextI18n")
     private void showLibsVersionInfo() {
         mOpencvVersion.setText("OpenCV Version: " + MorpherApi.getOpenCvVersionString());
-        mStasmVersion.setText("Stasm Version: " + MorpherApi.getStasmVersionString());
         mLibyuvVersion.setText("libyuv Version: " + MorpherApi.getLibYUVVersionString());
     }
 
@@ -58,14 +55,11 @@ public class VersionInfoActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @OnClick({R.id.opencv_version, R.id.stasm_version})
+    @OnClick({R.id.opencv_version})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.opencv_version:
                 WebViewActivity.startUrl("https://opencv.org/");
-                break;
-            case R.id.stasm_version:
-                WebViewActivity.startUrl("http://www.milbo.users.sonic.net/stasm/");
                 break;
         }
     }

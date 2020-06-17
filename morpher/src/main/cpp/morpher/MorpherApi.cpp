@@ -4,23 +4,15 @@
 
 #include "MorpherApi.h"
 #include <opencv2/opencv.hpp>
-#include <stasm/stasm_lib.h>
-#include <venus/Feature.h>
 #include "MorphUtils.h"
 #include "Subdiv2DIndex.h"
 #include "ColorUtils.h"
 
 using namespace cv;
-using namespace venus;
 
 JNIEXPORT jstring JNICALL
 JNI_FUNC(getOpenCvVersionString)(JNIEnv *env, jclass type) {
     return env->NewStringUTF(CV_VERSION);
-}
-
-JNIEXPORT jstring JNICALL
-JNI_FUNC(getStasmVersionString)(JNIEnv *env, jclass type) {
-    return env->NewStringUTF(stasm_VERSION);
 }
 
 JNIEXPORT jstring JNICALL
@@ -38,7 +30,7 @@ JNI_FUNC(nDetectFaceRect)(JNIEnv *env, jclass type, jobject bitmap, jstring clas
     assert(pixels != nullptr);
     Mat image(info.height, info.width, CV_8UC4, pixels);
     // convert to gray map
-    cvtColor(image, gray, CV_RGBA2GRAY);
+    cvtColor(image, gray, COLOR_RGBA2GRAY);
     AndroidBitmap_unlockPixels(env, bitmap);
     std::vector<Rect> faces;
     // detect
@@ -46,118 +38,6 @@ JNI_FUNC(nDetectFaceRect)(JNIEnv *env, jclass type, jobject bitmap, jstring clas
     env->ReleaseStringUTFChars(classifierPath_, classifierPath);
     auto intArray = rectVector2AIntArray(env, faces);
     return intArray;
-}
-
-JNIEXPORT jobjectArray JNICALL
-JNI_FUNC(nDetectFace)(JNIEnv *env, jclass type, jobject bitmap,
-                      jstring imgPath_, jstring classifierPath_) {
-    const char *imgPath = env->GetStringUTFChars(imgPath_, nullptr);
-    const char *classifierPath = env->GetStringUTFChars(classifierPath_, nullptr);
-    AndroidBitmapInfo info;
-    Mat gray;
-    void *pixels = lockAndroidBitmap(env, bitmap, info);
-    assert(pixels != nullptr);
-    Mat image(info.height, info.width, CV_8UC4, pixels);
-    cvtColor(image, gray, CV_RGBA2GRAY);
-    AndroidBitmap_unlockPixels(env, bitmap);
-    const std::vector<Point2f> points = Feature::detectFace(gray, imgPath, classifierPath);
-    env->ReleaseStringUTFChars(imgPath_, imgPath);
-    env->ReleaseStringUTFChars(classifierPath_, classifierPath);
-    jobjectArray pointFArray = point2fVector2APointFArray(env, points);
-    return pointFArray;
-}
-
-JNIEXPORT jfloatArray JNICALL
-JNI_FUNC(nDetectFaceFArray)(JNIEnv *env, jclass type, jobject bitmap, jstring imgPath_,
-                            jstring classifierPath_, jboolean isCorner) {
-    const char *imgPath = env->GetStringUTFChars(imgPath_, nullptr);
-    const char *classifierPath = env->GetStringUTFChars(classifierPath_, nullptr);
-    AndroidBitmapInfo info;
-    Mat gray;
-    void *pixels = lockAndroidBitmap(env, bitmap, info);
-    assert(pixels != nullptr);
-    Mat image(info.height, info.width, CV_8UC4, pixels);
-    cvtColor(image, gray, CV_RGBA2GRAY);
-    AndroidBitmap_unlockPixels(env, bitmap);
-    std::vector<Point2f> points = Feature::detectFace(gray, imgPath, classifierPath);
-    if (isCorner == JNI_TRUE && !points.empty()) {
-        MorphUtils::getImageCornerPoints(info.width, info.height, points);
-    }
-    env->ReleaseStringUTFChars(imgPath_, imgPath);
-    env->ReleaseStringUTFChars(classifierPath_, classifierPath);
-    jfloatArray floatArray = point2fVector2AFloatArray(env, points);
-    return floatArray;
-}
-
-JNIEXPORT jobjectArray JNICALL
-JNI_FUNC(nGetFaceSubDiv)(JNIEnv *env, jclass type, jobject bitmap,
-                         jstring imgPath_, jstring classifierPath_) {
-    const char *imgPath = env->GetStringUTFChars(imgPath_, nullptr);
-    const char *classifierPath = env->GetStringUTFChars(classifierPath_, nullptr);
-    AndroidBitmapInfo info;
-    Mat gray;
-    void *pixels = lockAndroidBitmap(env, bitmap, info);
-    assert(pixels != nullptr);
-    Mat image(info.height, info.width, CV_8UC4, pixels);
-    cvtColor(image, gray, CV_RGBA2GRAY);
-    AndroidBitmap_unlockPixels(env, bitmap);
-
-    std::vector<Point2f> facePts = Feature::detectFace(gray, imgPath, classifierPath);
-    env->ReleaseStringUTFChars(imgPath_, imgPath);
-    env->ReleaseStringUTFChars(classifierPath_, classifierPath);
-
-    std::vector<Point2f> cornerPts;
-    MorphUtils::getImageCornerPoints(info.width, info.height, cornerPts);
-
-    Rect rect(0, 0, info.width, info.height);
-    Subdiv2D subDiv(rect);
-    subDiv.insert(cornerPts);
-    for (const auto &point : facePts) {
-        if (point.inside(rect)) {
-            subDiv.insert(point);
-        }
-    }
-
-    std::vector<Point2f> trianglePts;
-    MorphUtils::getTrianglesPoints(subDiv, trianglePts);
-
-    jobjectArray pointFArray = point2fVector2APointFArray(env, trianglePts);
-    return pointFArray;
-}
-
-JNIEXPORT jfloatArray JNICALL
-JNI_FUNC(nGetFaceSubDivFArray)(JNIEnv *env, jclass type, jobject bitmap,
-                               jstring imgPath_, jstring classifierPath_) {
-    const char *imgPath = env->GetStringUTFChars(imgPath_, nullptr);
-    const char *classifierPath = env->GetStringUTFChars(classifierPath_, nullptr);
-    AndroidBitmapInfo info;
-    Mat gray;
-    void *pixels = lockAndroidBitmap(env, bitmap, info);
-    assert(pixels != nullptr);
-    Mat image(info.height, info.width, CV_8UC4, pixels);
-    cvtColor(image, gray, CV_RGBA2GRAY);
-    AndroidBitmap_unlockPixels(env, bitmap);
-
-    std::vector<Point2f> facePts = Feature::detectFace(gray, imgPath, classifierPath);
-    env->ReleaseStringUTFChars(imgPath_, imgPath);
-    env->ReleaseStringUTFChars(classifierPath_, classifierPath);
-
-    std::vector<Point2f> cornerPts;
-    MorphUtils::getImageCornerPoints(info.width, info.height, cornerPts);
-
-    Rect rect(0, 0, info.width, info.height);
-    Subdiv2D subDiv(rect);
-    subDiv.insert(cornerPts);
-    for (const auto &point : facePts) {
-        if (point.inside(rect)) {
-            subDiv.insert(point);
-        }
-    }
-    std::vector<Point2f> trianglePts;
-    MorphUtils::getTrianglesPoints(subDiv, trianglePts);
-
-    jfloatArray floatArray = point2fVector2AFloatArray(env, trianglePts);
-    return floatArray;
 }
 
 JNIEXPORT jfloatArray JNICALL

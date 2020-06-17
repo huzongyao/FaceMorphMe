@@ -17,29 +17,10 @@ JNIEXPORT jstring JNICALL
 JNI_FUNC(getOpenCvVersionString)(JNIEnv *env, jclass type);
 
 JNIEXPORT jstring JNICALL
-JNI_FUNC(getStasmVersionString)(JNIEnv *env, jclass type);
-
-JNIEXPORT jstring JNICALL
 JNI_FUNC(getLibYUVVersionString)(JNIEnv *env, jclass type);
 
 JNIEXPORT jintArray JNICALL
 JNI_FUNC(nDetectFaceRect)(JNIEnv *env, jclass type, jobject bitmap, jstring classifierPath_);
-
-JNIEXPORT jobjectArray JNICALL
-JNI_FUNC(nDetectFace)(JNIEnv *env, jclass type, jobject bitmap,
-                      jstring imgPath_, jstring classifierPath_);
-
-JNIEXPORT jfloatArray JNICALL
-JNI_FUNC(nDetectFaceFArray)(JNIEnv *env, jclass type, jobject bitmap, jstring imgPath_,
-                            jstring classifierPath_, jboolean isCorner);
-
-JNIEXPORT jobjectArray JNICALL
-JNI_FUNC(nGetFaceSubDiv)(JNIEnv *env, jclass type, jobject bitmap,
-                         jstring imgPath_, jstring classifierPath_);
-
-JNIEXPORT jfloatArray JNICALL
-JNI_FUNC(nGetFaceSubDivFArray)(JNIEnv *env, jclass type, jobject bitmap,
-                               jstring imgPath_, jstring classifierPath_);
 
 JNIEXPORT jfloatArray JNICALL
 JNI_FUNC(nGetRectCornersFArray)(JNIEnv *env, jclass type, jint width, jint height);

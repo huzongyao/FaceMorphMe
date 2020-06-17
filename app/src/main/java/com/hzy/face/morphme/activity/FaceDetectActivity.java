@@ -25,7 +25,7 @@ import com.hzy.face.morphme.consts.RequestCode;
 import com.hzy.face.morphme.consts.RouterHub;
 import com.hzy.face.morphme.utils.ActionUtils;
 import com.hzy.face.morphme.utils.BitmapDrawUtils;
-import com.hzy.face.morphme.utils.CascadeUtils;
+import com.hzy.face.morphme.utils.ModelFileUtils;
 import com.hzy.face.morphme.utils.SpaceUtils;
 import com.hzy.face.morphme.widget.Ratio34ImageView;
 import com.yalantis.ucrop.UCrop;
@@ -61,7 +61,7 @@ public class FaceDetectActivity extends AppCompatActivity {
         mProgressDialog.setMessage(getString(R.string.loading_wait_tips));
         mProgressDialog.setCancelable(false);
         mExecutor = Executors.newSingleThreadExecutor();
-        mExecutor.submit(CascadeUtils::initSeetaApi);
+        mExecutor.submit(ModelFileUtils::initSeetaApi);
     }
 
     @Override
@@ -75,7 +75,6 @@ public class FaceDetectActivity extends AppCompatActivity {
     }
 
     @OnClick({R.id.demo_image, R.id.btn_detect_face,
-            R.id.btn_detect_points, R.id.btn_detect_triangle,
             R.id.btn_seeta_detect, R.id.btn_seeta_landmarks})
     public void onButtonsClicked(View view) {
         switch (view.getId()) {
@@ -84,12 +83,6 @@ public class FaceDetectActivity extends AppCompatActivity {
                 break;
             case R.id.btn_detect_face:
                 detectFromBitmap(2);
-                break;
-            case R.id.btn_detect_points:
-                detectFromBitmap(0);
-                break;
-            case R.id.btn_detect_triangle:
-                detectFromBitmap(1);
                 break;
             case R.id.btn_seeta_detect:
                 detectFromBitmap(3);
@@ -113,20 +106,10 @@ public class FaceDetectActivity extends AppCompatActivity {
     }
 
     private void doDetectAsync(int type) {
-        String cascadePath = CascadeUtils.ensureCascadePath();
         final Bitmap bitmap = mDemoBitmap.copy(Bitmap.Config.ARGB_8888, true);
         switch (type) {
-            case 0:
-                PointF[] points = MorpherApi.detectFaceLandmarks(bitmap, cascadePath);
-                BitmapDrawUtils.drawPointsOnBitmap(bitmap, points);
-                break;
-            case 1:
-                points = MorpherApi.getFaceSubDiv(bitmap, cascadePath);
-                BitmapDrawUtils.drawTrianglesOnBitmap(bitmap, points);
-                BitmapDrawUtils.drawPointsOnBitmap(bitmap, points);
-                break;
             case 2:
-                Rect[] faces = MorpherApi.detectFaceRect(bitmap, CascadeUtils.getCascadeFacePath());
+                Rect[] faces = MorpherApi.detectFaceRect(bitmap, ModelFileUtils.getCascadeFacePath());
                 BitmapDrawUtils.drawRectsOnBitmap(bitmap, faces);
                 break;
             case 3:
@@ -134,7 +117,7 @@ public class FaceDetectActivity extends AppCompatActivity {
                 BitmapDrawUtils.drawRectsOnBitmap(bitmap, faces);
                 break;
             case 4:
-                points = Seeta2Api.INSTANCE.detectLandmarks(bitmap);
+                PointF[] points = Seeta2Api.INSTANCE.detectLandmarks(bitmap);
                 BitmapDrawUtils.drawPointsOnBitmap(bitmap, points);
                 break;
         }

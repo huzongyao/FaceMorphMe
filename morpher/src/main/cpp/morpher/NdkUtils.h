@@ -5,7 +5,7 @@
 #ifndef FACEMORPHME_NDKUTILS_H
 #define FACEMORPHME_NDKUTILS_H
 
-#include <cv.h>
+#include <opencv2/opencv.hpp>
 #include "SeetaDetector.h"
 
 #ifdef __cplusplus
@@ -13,6 +13,7 @@ extern "C" {
 #endif
 
 #include <jni.h>
+
 #include <android/bitmap.h>
 
 #ifdef NDEBUG

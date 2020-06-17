@@ -50,6 +50,4 @@
     <string name="operation_finished">操作完成!!</string>
     <string name="seeta_detect">Seeta人脸</string>
     <string name="seeta_points">Seeta关键点</string>
-    <string name="face_detector">人脸识别引擎</string>
-    <string name="pref_face_detector_summary">人脸关键点识别器: %s</string>
 </resources>

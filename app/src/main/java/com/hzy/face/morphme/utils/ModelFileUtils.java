@@ -8,14 +8,10 @@ import com.hzy.face.morphme.consts.AppConst;
 import java.io.File;
 import java.io.InputStream;
 
-public class CascadeUtils {
+public class ModelFileUtils {
 
     public static String getCascadePath() {
         return new File(Utils.getApp().getFilesDir(), AppConst.CASCADE_DIR).getPath();
-    }
-
-    public static String getSeetaPath() {
-        return new File(Utils.getApp().getFilesDir(), AppConst.SEETA_DIR).getPath();
     }
 
     public static String getCascadeFacePath() {

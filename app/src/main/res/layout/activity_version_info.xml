@@ -26,21 +26,6 @@
             android:text="@string/opencv_intro" />
 
         <TextView
-            android:id="@+id/stasm_version"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:textColor="@color/colorAccent"
-            android:textSize="18sp"
-            tools:text="Stasm Version: 1.0.0" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:text="@string/stasm_intro" />
-
-        <TextView
             android:id="@+id/libyuv_version"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
