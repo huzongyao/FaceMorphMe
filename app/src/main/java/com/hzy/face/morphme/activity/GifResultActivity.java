@@ -72,7 +72,7 @@ public class GifResultActivity extends AppCompatActivity {
                 break;
             case R.id.share_button:
                 if (!StringUtils.isTrimEmpty(mFilePath)) {
-                    Intent intent = IntentUtils.getShareImageIntent("", mFilePath);
+                    Intent intent = IntentUtils.getShareImageIntent(mFilePath);
                     startActivity(Intent.createChooser(intent, getString(R.string.share_to)));
                 }
                 break;
